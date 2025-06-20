@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useId } from "react";
+import { useState, useId } from "react";
 import { useUser } from "@civic/auth/react";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -14,17 +14,11 @@ export default function Onboard() {
   const [selectedRole, setSelectedRole] = useState<string>("");
   const { user } = useUser();
 
-  // useEffect(() => {
-  //   if (!user?.id) {
-  //     router.push("/signin");
-  //   }
-  // }, [user]);
-
   const handleContinue = () => {
     if (selectedRole === "volunteer") {
       router.push("/onboard/volunteer");
-    } else if (selectedRole === "organizer") {
-      router.push("/onboard/organizer");
+    } else if (selectedRole === "organization") {
+      router.push("/onboard/organization");
     }
   };
 
@@ -81,12 +75,12 @@ export default function Onboard() {
               </div>
             </div>
 
-            {/* Organizer Option */}
+            {/* Organization Option */}
             <div className="border-input has-data-[state=checked]:border-primary/50 relative flex w-full items-start gap-4 rounded-md border p-6 shadow-xs outline-none transition-colors">
               <RadioGroupItem
-                value="organizer"
-                id={`${id}-organizer`}
-                aria-describedby={`${id}-organizer-description`}
+                value="organization"
+                id={`${id}-organization`}
+                aria-describedby={`${id}-organization-description`}
                 className="order-1 after:absolute after:inset-0"
               />
               <div className="flex grow items-center gap-4">
@@ -95,13 +89,13 @@ export default function Onboard() {
                 </div>
                 <div className="grid grow gap-1">
                   <Label
-                    htmlFor={`${id}-organizer`}
+                    htmlFor={`${id}-organization`}
                     className="text-base font-medium"
                   >
-                    Organizer
+                    Organization
                   </Label>
                   <p
-                    id={`${id}-organizer-description`}
+                    id={`${id}-organization-description`}
                     className="text-muted-foreground text-sm"
                   >
                     I want to create and manage events to bring people together.

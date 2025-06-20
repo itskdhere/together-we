@@ -24,8 +24,6 @@ export async function getAuthStatus() {
       email: email,
     });
 
-    console.log(existingUser);
-
     if (!existingUser) {
       const userData = new User({
         name: name,
