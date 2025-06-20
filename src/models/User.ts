@@ -5,6 +5,7 @@ export interface IUser extends Document {
   username?: string;
   email: string;
   civicId: string;
+  onboarded: boolean;
   bio?: string;
   type?: string;
   data?: Types.ObjectId;
@@ -17,6 +18,7 @@ const UserSchema = new Schema<IUser>({
   username: { type: String },
   email: { type: String, required: true },
   civicId: { type: String, required: true },
+  onboarded: { type: Boolean, default: false },
   bio: { type: String },
   type: { type: String },
   data: { type: Schema.Types.ObjectId },

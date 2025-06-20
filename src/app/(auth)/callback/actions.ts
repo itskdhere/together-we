@@ -24,6 +24,8 @@ export async function getAuthStatus() {
       email: email,
     });
 
+    console.log(existingUser);
+
     if (!existingUser) {
       const userData = new User({
         name: name,
@@ -38,12 +40,14 @@ export async function getAuthStatus() {
         success: true,
         url: "/onboard",
       };
+    } else if (!existingUser.onboarded) {
+      return { success: true, url: "/onboard" };
+    } else {
+      return {
+        success: true,
+        url: "/dashboard",
+      };
     }
-
-    return {
-      success: true,
-      url: "/dashboard",
-    };
   } catch (error) {
     console.error("Failed to save user to database:", error);
     throw error;

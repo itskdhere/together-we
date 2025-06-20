@@ -1,0 +1,129 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState, useEffect, useId } from "react";
+import { useUser } from "@civic/auth/react";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Building2, Users } from "lucide-react";
+
+export default function Onboard() {
+  const id = useId();
+  const router = useRouter();
+  const [selectedRole, setSelectedRole] = useState<string>("");
+  const { user } = useUser();
+
+  // useEffect(() => {
+  //   if (!user?.id) {
+  //     router.push("/signin");
+  //   }
+  // }, [user]);
+
+  const handleContinue = () => {
+    if (selectedRole === "volunteer") {
+      router.push("/onboard/volunteer");
+    } else if (selectedRole === "organizer") {
+      router.push("/onboard/organizer");
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="max-w-2xl mx-auto p-6 space-y-8">
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl font-bold">
+            Hello {user?.name || "there"}!{" "}
+          </h1>
+          <p className="text-muted-foreground">
+            Welcome to our platform. Let's get you set up based on how you'd
+            like to participate.
+          </p>
+        </div>
+        {/* Role Selection */}
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold">
+            How would you like to get involved?
+          </h2>
+
+          <RadioGroup
+            className="gap-4"
+            value={selectedRole}
+            onValueChange={setSelectedRole}
+          >
+            {/* Volunteer Option */}
+            <div className="border-input has-data-[state=checked]:border-primary/50 relative flex w-full items-start gap-4 rounded-md border p-6 shadow-xs outline-none transition-colors">
+              <RadioGroupItem
+                value="volunteer"
+                id={`${id}-volunteer`}
+                aria-describedby={`${id}-volunteer-description`}
+                className="order-1 after:absolute after:inset-0"
+              />
+              <div className="flex grow items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
+                  <Users className="h-6 w-6 text-blue-600" />
+                </div>
+                <div className="grid grow gap-1">
+                  <Label
+                    htmlFor={`${id}-volunteer`}
+                    className="text-base font-medium"
+                  >
+                    Volunteer
+                  </Label>
+                  <p
+                    id={`${id}-volunteer-description`}
+                    className="text-muted-foreground text-sm"
+                  >
+                    I want to help out with events and activities in my
+                    community.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Organizer Option */}
+            <div className="border-input has-data-[state=checked]:border-primary/50 relative flex w-full items-start gap-4 rounded-md border p-6 shadow-xs outline-none transition-colors">
+              <RadioGroupItem
+                value="organizer"
+                id={`${id}-organizer`}
+                aria-describedby={`${id}-organizer-description`}
+                className="order-1 after:absolute after:inset-0"
+              />
+              <div className="flex grow items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                  <Building2 className="h-6 w-6 text-green-600" />
+                </div>
+                <div className="grid grow gap-1">
+                  <Label
+                    htmlFor={`${id}-organizer`}
+                    className="text-base font-medium"
+                  >
+                    Organizer
+                  </Label>
+                  <p
+                    id={`${id}-organizer-description`}
+                    className="text-muted-foreground text-sm"
+                  >
+                    I want to create and manage events to bring people together.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </RadioGroup>
+
+          {/* Continue Button */}
+          <div className="flex justify-center pt-4">
+            <Button
+              onClick={handleContinue}
+              disabled={!selectedRole}
+              size="lg"
+              className="min-w-32"
+            >
+              Continue
+            </Button>
+          </div>
+        </div>{" "}
+      </div>
+    </div>
+  );
+}
