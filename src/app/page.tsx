@@ -9,7 +9,6 @@ import {
   Users,
   MapPin,
   Clock,
-  Star,
   ArrowRight,
   CheckCircle,
   HandHeart,
