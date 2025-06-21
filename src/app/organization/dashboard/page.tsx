@@ -204,17 +204,17 @@ export default function OrganizationDashboard() {
   }, [searchParams]);
 
   // Add effect to listen for focus events to refresh data when returning to the page
-  useEffect(() => {
-    const handleFocus = () => {
-      fetchDashboardData();
-    };
+  // useEffect(() => {
+  //   const handleFocus = () => {
+  //     fetchDashboardData();
+  //   };
 
-    window.addEventListener("focus", handleFocus);
+  //   window.addEventListener("focus", handleFocus);
 
-    return () => {
-      window.removeEventListener("focus", handleFocus);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("focus", handleFocus);
+  //   };
+  // }, []);
 
   const getStatusBadge = (status: VolunteerOpportunity["status"]) => {
     const variants = {
