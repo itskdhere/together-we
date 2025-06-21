@@ -35,7 +35,7 @@ export default function VolunteerOnboard() {
       return;
     }
     setLoading(false);
-    router.push("/dashboard");
+    router.push("/volunteer/dashboard");
   };
 
   return (

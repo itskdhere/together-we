@@ -37,7 +37,7 @@ export default function OrganizationOnboard() {
       return;
     }
     setLoading(false);
-    router.push("/dashboard");
+    router.push("/organization/dashboard");
   };
 
   return (

@@ -19,8 +19,8 @@ const EventSchema = new Schema<IEvent>({
   requiredSkills: { type: String, required: true },
   startTime: { type: Date, required: true },
   endTime: { type: Date, required: true },
-  joinedVolunteers: [{ type: Schema.Types.ObjectId, ref: "Volunteers" }],
+  joinedVolunteers: [{ type: Schema.Types.ObjectId, ref: "Volunteer" }],
 });
 
 export const Event =
-  mongoose.models.Event || mongoose.model<IEvent>("Events", EventSchema);
+  mongoose.models.Event || mongoose.model<IEvent>("Event", EventSchema);

@@ -9,7 +9,7 @@ export interface IOrganization extends Document {
 const OrganizationSchema = new Schema<IOrganization>({
   category: { type: String },
   locality: { type: String },
-  events: [{ type: Schema.Types.ObjectId, ref: "Events" }],
+  events: [{ type: Schema.Types.ObjectId, ref: "Event" }],
 });
 
 export const Organization =

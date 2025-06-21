@@ -3,6 +3,7 @@
 import { getUser } from "@civic/auth/nextjs";
 import { dbConnect } from "@/lib/db";
 import { User } from "@/models/User";
+import { Volunteer } from "@/models/Volunteers";
 
 export interface VolunteerOnboardInput {
   name: string;
@@ -39,12 +40,17 @@ export async function onboardVolunteer({
     return { success: false, message: "Username already exists" };
   }
 
+  const volunteer = new Volunteer({
+    skills: skills,
+  });
+  await volunteer.save();
+
   existingUser.name = name;
   existingUser.username = username;
   existingUser.bio = bio;
-  existingUser.skills = skills;
   existingUser.type = "volunteer";
   existingUser.onboarded = true;
+  existingUser.data = volunteer._id;
   existingUser.updatedAt = new Date();
   await existingUser.save();
 

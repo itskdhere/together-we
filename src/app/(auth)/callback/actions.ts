@@ -41,10 +41,13 @@ export async function getAuthStatus() {
     } else if (!existingUser.onboarded) {
       return { success: true, url: "/onboard" };
     } else {
-      return {
-        success: true,
-        url: "/dashboard",
-      };
+      if (existingUser.type === "volunteer") {
+        return { success: true, url: "/volunteer/dashboard" };
+      } else if (existingUser.type === "organization") {
+        return { success: true, url: "/organization/dashboard" };
+      } else {
+        return { success: true, url: "/" };
+      }
     }
   } catch (error) {
     console.error("Failed to save user to database:", error);
