@@ -88,17 +88,16 @@ export default function ProfilePage() {
       toast.error(result.error);
     }
   };
-
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      <div className="min-h-screen bg-gray-900">
         {/* Navigation Bar */}
-        <nav className="bg-white shadow-sm border-b sticky top-0 z-10">
+        <nav className="bg-gray-800 shadow-sm border-b border-gray-700 sticky top-0 z-10">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between h-16">
               {/* Logo */}
               <div className="flex items-center space-x-2">
-                <span className="text-xl font-bold text-gray-900">Unity</span>
+                <span className="text-xl font-bold text-white">Unity</span>
               </div>
 
               {/* Navigation Links */}
@@ -107,8 +106,8 @@ export default function ProfilePage() {
                   href="/volunteer/dashboard"
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
                     activeTab === "dashboard"
-                      ? "text-blue-600 bg-blue-50"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                      ? "text-blue-400 bg-blue-900/30"
+                      : "text-gray-300 hover:text-white hover:bg-gray-700"
                   }`}
                   onClick={() => setActiveTab("dashboard")}
                 >
@@ -119,8 +118,8 @@ export default function ProfilePage() {
                   href="/volunteer/search"
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
                     activeTab === "search"
-                      ? "text-blue-600 bg-blue-50"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                      ? "text-blue-400 bg-blue-900/30"
+                      : "text-gray-300 hover:text-white hover:bg-gray-700"
                   }`}
                   onClick={() => setActiveTab("search")}
                 >
@@ -131,8 +130,8 @@ export default function ProfilePage() {
                   href="/volunteer/profile"
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
                     activeTab === "profile"
-                      ? "text-blue-600 bg-blue-50"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                      ? "text-blue-400 bg-blue-900/30"
+                      : "text-gray-300 hover:text-white hover:bg-gray-700"
                   }`}
                   onClick={() => setActiveTab("profile")}
                 >
@@ -144,7 +143,7 @@ export default function ProfilePage() {
               <div className="flex items-center space-x-3">
                 <Button
                   variant="ghost"
-                  className="text-red-500 hover:text-red-400 hover:bg-gray-50"
+                  className="text-red-400 hover:text-red-300 hover:bg-gray-700"
                   onClick={signOut}
                 >
                   Logout
@@ -158,24 +157,23 @@ export default function ProfilePage() {
         <main className="container mx-auto px-4 py-8">
           <div className="w-full mt-24 flex justify-center">
             <div className="flex flex-col items-center gap-2">
-              <Loader2 className="size-8 animate-spin text-zinc-500" />
-              <h3 className="font-semibold text-xl">Loading...</h3>
+              <Loader2 className="size-8 animate-spin text-blue-400" />
+              <h3 className="font-semibold text-xl text-white">Loading...</h3>
             </div>
           </div>
         </main>
       </div>
     );
   }
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-gray-900">
       {/* Navigation Bar */}
-      <nav className="bg-white shadow-sm border-b sticky top-0 z-10">
+      <nav className="bg-gray-800 shadow-sm border-b border-gray-700 sticky top-0 z-10">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center space-x-2">
-              <span className="text-xl font-bold text-gray-900">Unity</span>
+              <span className="text-xl font-bold text-white">Unity</span>
             </div>
 
             {/* Navigation Links */}
@@ -184,8 +182,8 @@ export default function ProfilePage() {
                 href="/volunteer/dashboard"
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
                   activeTab === "dashboard"
-                    ? "text-blue-600 bg-blue-50"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                    ? "text-blue-400 bg-blue-900/30"
+                    : "text-gray-300 hover:text-white hover:bg-gray-700"
                 }`}
                 onClick={() => setActiveTab("dashboard")}
               >
@@ -196,8 +194,8 @@ export default function ProfilePage() {
                 href="/volunteer/search"
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
                   activeTab === "search"
-                    ? "text-blue-600 bg-blue-50"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                    ? "text-blue-400 bg-blue-900/30"
+                    : "text-gray-300 hover:text-white hover:bg-gray-700"
                 }`}
                 onClick={() => setActiveTab("search")}
               >
@@ -208,8 +206,8 @@ export default function ProfilePage() {
                 href="/volunteer/profile"
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
                   activeTab === "profile"
-                    ? "text-blue-600 bg-blue-50"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                    ? "text-blue-400 bg-blue-900/30"
+                    : "text-gray-300 hover:text-white hover:bg-gray-700"
                 }`}
                 onClick={() => setActiveTab("profile")}
               >
@@ -221,7 +219,7 @@ export default function ProfilePage() {
             <div className="flex items-center space-x-3">
               <Button
                 variant="ghost"
-                className="text-red-500 hover:text-red-400 hover:bg-gray-50"
+                className="text-red-400 hover:text-red-300 hover:bg-gray-700"
                 onClick={signOut}
               >
                 Logout
@@ -234,14 +232,15 @@ export default function ProfilePage() {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
+          {" "}
           {/* Profile Header */}
           <div className="mb-8">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                <h1 className="text-3xl font-bold text-white mb-2">
                   My Profile
                 </h1>
-                <p className="text-gray-600">
+                <p className="text-gray-400">
                   Manage your volunteer profile and preferences.
                 </p>
               </div>
@@ -251,7 +250,7 @@ export default function ProfilePage() {
                 className={
                   isEditing
                     ? "bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600"
-                    : ""
+                    : "bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600 hover:text-white"
                 }
               >
                 {isEditing ? (
@@ -268,17 +267,19 @@ export default function ProfilePage() {
               </Button>
             </div>
           </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {" "}
             {/* Profile Information */}
             <div className="lg:col-span-2 space-y-6">
-              <Card>
+              <Card className="bg-gray-800 border-gray-700">
                 <CardHeader>
-                  <CardTitle>Personal Information</CardTitle>
+                  <CardTitle className="text-white">
+                    Personal Information
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
                       Full Name
                     </label>
                     {isEditing ? (
@@ -287,19 +288,20 @@ export default function ProfilePage() {
                         onChange={(e) =>
                           setProfile({ ...profile, name: e.target.value })
                         }
+                        className="bg-gray-700 border-gray-600 text-white"
                       />
                     ) : (
-                      <p className="text-gray-900">{profile.name}</p>
+                      <p className="text-white">{profile.name}</p>
                     )}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
                       Email
                     </label>
-                    <p className="text-gray-900">{profile.email}</p>
+                    <p className="text-white">{profile.email}</p>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
                       Bio
                     </label>
                     {isEditing ? (
@@ -309,13 +311,14 @@ export default function ProfilePage() {
                           setProfile({ ...profile, bio: e.target.value })
                         }
                         rows={3}
+                        className="bg-gray-700 border-gray-600 text-white"
                       />
                     ) : (
-                      <p className="text-gray-900">{profile.bio}</p>
+                      <p className="text-white">{profile.bio}</p>
                     )}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
                       Skills & Interests
                     </label>
                     {isEditing ? (
@@ -326,65 +329,64 @@ export default function ProfilePage() {
                         }
                         rows={2}
                         placeholder="Enter skills separated by commas"
+                        className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                       />
                     ) : (
-                      <p className="text-gray-900">{profile.skills}</p>
+                      <p className="text-white">{profile.skills}</p>
                     )}
                   </div>
                 </CardContent>
               </Card>
-            </div>
-
+            </div>{" "}
             {/* Stats and Achievements */}
             <div className="space-y-6">
               {/* Quick Stats */}
-              <Card>
+              <Card className="bg-gray-800 border-gray-700">
                 <CardHeader>
-                  <CardTitle>Volunteer Stats</CardTitle>
+                  <CardTitle className="text-white">Volunteer Stats</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-green-100 rounded-lg">
-                      <Heart className="h-5 w-5 text-green-600" />
+                    <div className="p-2 bg-green-900/30 rounded-lg">
+                      <Heart className="h-5 w-5 text-green-400" />
                     </div>{" "}
                     <div>
-                      <p className="text-xl font-bold text-gray-900">
+                      <p className="text-xl font-bold text-white">
                         {stats.eventsJoined}
                       </p>
-                      <p className="text-xs text-gray-600">Events Joined</p>
+                      <p className="text-xs text-gray-400">Events Joined</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-blue-100 rounded-lg">
-                      <Clock className="h-5 w-5 text-blue-600" />
+                    <div className="p-2 bg-blue-900/30 rounded-lg">
+                      <Clock className="h-5 w-5 text-blue-400" />
                     </div>
                     <div>
-                      <p className="text-xl font-bold text-gray-900">
+                      <p className="text-xl font-bold text-white">
                         {stats.hoursVolunteered}
                       </p>
-                      <p className="text-xs text-gray-600">Hours Volunteered</p>
+                      <p className="text-xs text-gray-400">Hours Volunteered</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-purple-100 rounded-lg">
-                      <Award className="h-5 w-5 text-purple-600" />
+                    <div className="p-2 bg-purple-900/30 rounded-lg">
+                      <Award className="h-5 w-5 text-purple-400" />
                     </div>
                     <div>
-                      <p className="text-xl font-bold text-gray-900">
+                      <p className="text-xl font-bold text-white">
                         {stats.organizationsHelped}
                       </p>
-                      <p className="text-xs text-gray-600">
+                      <p className="text-xs text-gray-400">
                         Organizations Helped
                       </p>
                     </div>
                   </div>
                 </CardContent>
-              </Card>
-
+              </Card>{" "}
               {/* Recent Activity */}
-              <Card>
+              <Card className="bg-gray-800 border-gray-700">
                 <CardHeader>
-                  <CardTitle>Recent Activity</CardTitle>
+                  <CardTitle className="text-white">Recent Activity</CardTitle>
                 </CardHeader>{" "}
                 <CardContent className="space-y-3">
                   {activities.length > 0 ? (
@@ -396,39 +398,39 @@ export default function ProfilePage() {
                         <div
                           className={`p-1 rounded ${
                             activity.type === "completed"
-                              ? "bg-green-100"
+                              ? "bg-green-900/30"
                               : activity.type === "joined"
-                              ? "bg-blue-100"
-                              : "bg-purple-100"
+                              ? "bg-blue-900/30"
+                              : "bg-purple-900/30"
                           }`}
                         >
                           {activity.type === "completed" ? (
                             <Award
                               className={`h-3 w-3 ${
                                 activity.type === "completed"
-                                  ? "text-green-600"
+                                  ? "text-green-400"
                                   : activity.type === "joined"
-                                  ? "text-blue-600"
-                                  : "text-purple-600"
+                                  ? "text-blue-400"
+                                  : "text-purple-400"
                               }`}
                             />
                           ) : (
                             <Calendar
                               className={`h-3 w-3 ${
                                 activity.type === "completed"
-                                  ? "text-green-600"
+                                  ? "text-green-400"
                                   : activity.type === "joined"
-                                  ? "text-blue-600"
-                                  : "text-purple-600"
+                                  ? "text-blue-400"
+                                  : "text-purple-400"
                               }`}
                             />
                           )}
                         </div>
                         <div>
-                          <p className="text-sm font-medium">
+                          <p className="text-sm font-medium text-white">
                             {activity.title}
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-gray-400">
                             {activity.timeAgo}
                           </p>
                         </div>
@@ -436,7 +438,7 @@ export default function ProfilePage() {
                     ))
                   ) : (
                     <div className="text-center py-4">
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-400">
                         No recent activity
                       </p>
                     </div>
