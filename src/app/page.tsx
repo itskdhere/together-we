@@ -1,4 +1,7 @@
 "use client";
+
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -13,9 +16,6 @@ import {
   Shield,
   Zap,
 } from "lucide-react";
-import Link from "next/link";
-
-import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
@@ -35,28 +35,26 @@ export default function Home() {
             <div className="hidden md:flex items-center space-x-6">
               <Link
                 href="#how-it-works"
-                className="text-gray-600 hover:text-gray-900 text-base hover:text-lg transform hover:scale-105 transition-all duration-200
-"
+                className="text-gray-600 hover:text-gray-900 text-base hover:text-lg transform hover:scale-105 transition-all duration-200"
               >
                 How It Works
               </Link>
               <Link
                 href="#volunteers"
-                className="text-gray-600 hover:text-gray-900 text-base hover:text-lg transform hover:scale-105 transition-all duration-200
-"
+                className="text-gray-600 hover:text-gray-900 text-base hover:text-lg transform hover:scale-105 transition-all duration-200"
               >
                 For Volunteers
               </Link>
               <Link
                 href="#requesters"
-                className="text-gray-600 hover:text-gray-900 text-base hover:text-lg transform hover:scale-105 transition-all duration-200
-"
+                className="text-gray-600 hover:text-gray-900 text-base hover:text-lg transform hover:scale-105 transition-all duration-200"
               >
                 Get Help
               </Link>
               <Button
                 variant="outline"
                 className="bg-white text-rose-600 border-rose-200 shadow-[0_0_8px_2px_#fecdd3] hover:shadow-[0_0_16px_4px_#fecdd3] hover:bg-amber-50 transition-all duration-200"
+                onClick={() => router.push("/signin")}
               >
                 Sign In
               </Button>
@@ -82,6 +80,7 @@ export default function Home() {
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white px-8 py-4 text-lg rounded-full"
+                onClick={() => router.push("/signup")}
               >
                 Join as Volunteer
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -90,6 +89,7 @@ export default function Home() {
                 size="lg"
                 variant="outline"
                 className="bg-white text-rose-600 border-rose-200 hover:bg-rose-50 px-8 py-4 text-lg rounded-full"
+                onClick={() => router.push("/signup")}
               >
                 Join as Organisation
                 <HandHeart className="ml-2 h-5 w-5" />
@@ -101,7 +101,7 @@ export default function Home() {
           <div className="mt-16 max-w-4xl mx-auto">
             <div className="bg-gradient-to-r from-rose-100 to-orange-100 rounded-3xl p-8 shadow-lg">
               <img
-                src="/helping1.jpeg"
+                src="/1.jpg"
                 alt="People helping each other in community"
                 className="w-full h-64 md:h-80 object-cover rounded-2xl"
               />
@@ -177,7 +177,7 @@ export default function Home() {
         {/* For Volunteers Section */}
         <section
           id="volunteers"
-          className="py-20 bg-gradient-to-r from-rose-50 to-orange-50"
+          className="p-20 bg-gradient-to-r from-rose-50 to-orange-50"
         >
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -241,6 +241,7 @@ export default function Home() {
                 <Button
                   size="lg"
                   className="bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white px-8 py-4 text-lg rounded-full"
+                  onClick={() => router.push("/signup")}
                 >
                   Start Volunteering Today
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -249,7 +250,7 @@ export default function Home() {
 
               <div className="bg-white p-8 rounded-3xl shadow-lg">
                 <img
-                  src="helping2.jpeg"
+                  src="/2.jpg"
                   alt="Volunteers helping in community"
                   className="w-full h-80 object-cover rounded-2xl"
                 />
@@ -264,7 +265,7 @@ export default function Home() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="bg-gradient-to-r from-rose-50 to-orange-50 p-8 rounded-3xl">
                 <img
-                  src="helping3.jpeg"
+                  src="/3.jpg"
                   alt="Person receiving help from volunteer"
                   className="w-full h-80 object-cover rounded-2xl"
                 />
@@ -306,6 +307,7 @@ export default function Home() {
                   size="lg"
                   variant="outline"
                   className="bg-white text-rose-600 border-rose-200 hover:bg-rose-50 px-8 py-4 text-lg rounded-full"
+                  onClick={() => router.push("/signup")}
                 >
                   Request Help Now
                   <HandHeart className="ml-2 h-5 w-5" />
@@ -469,6 +471,7 @@ export default function Home() {
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white px-8 py-4 text-lg rounded-full"
+                onClick={() => router.push("/signup")}
               >
                 Become a Volunteer
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -477,6 +480,7 @@ export default function Home() {
                 size="lg"
                 variant="outline"
                 className="bg-white text-rose-600 border-rose-200 hover:bg-rose-50 px-8 py-4 text-lg rounded-full"
+                onClick={() => router.push("/signup")}
               >
                 Get Help Today
                 <HandHeart className="ml-2 h-5 w-5" />
@@ -639,9 +643,6 @@ export default function Home() {
           </div>
         </footer>
       </div>
-
-      <button onClick={() => router.push("/signup")}>Get Started</button>
-      <button onClick={() => router.push("/signin")}>Login</button>
     </>
   );
 }
