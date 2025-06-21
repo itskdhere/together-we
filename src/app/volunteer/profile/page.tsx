@@ -71,7 +71,7 @@ export default function ProfilePage() {
         } else {
           toast.error(activityResult.error);
         }
-      } catch (error) {
+      } catch {
         toast.error("Failed to load data");
       }
       setLoading(false);

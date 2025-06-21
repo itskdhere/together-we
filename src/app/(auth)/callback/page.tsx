@@ -7,7 +7,6 @@ import { getAuthStatus } from "./actions";
 
 export default function AuthCallback() {
   const router = useRouter();
-
   useEffect(() => {
     async function checkAuthStatus() {
       try {
@@ -19,7 +18,7 @@ export default function AuthCallback() {
       }
     }
     checkAuthStatus();
-  }, []);
+  }, [router]);
 
   return (
     <div className="w-full mt-24 flex justify-center">

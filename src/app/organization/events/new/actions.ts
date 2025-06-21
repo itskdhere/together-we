@@ -5,7 +5,6 @@ import { dbConnect } from "@/lib/db";
 import { User } from "@/models/User";
 import { Organization } from "@/models/Organization";
 import { Event } from "@/models/Events";
-import { Volunteer } from "@/models/Volunteers";
 
 export interface CreateVolunteerOpportunityInput {
   title: string;

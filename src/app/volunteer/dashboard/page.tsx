@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useUser } from "@civic/auth/react";
@@ -17,7 +16,6 @@ import {
   Clock,
   Users,
   Heart,
-  ChevronRight,
   Loader2,
 } from "lucide-react";
 import {

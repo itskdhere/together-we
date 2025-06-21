@@ -8,13 +8,12 @@ import { CivicAuthIframeContainer } from "@civic/auth/react";
 export default function Auth() {
   const { user } = useUser();
   const router = useRouter();
-
   useEffect(() => {
     if (user) {
       console.log(user);
       router.push("/callback");
     }
-  }, [user]);
+  }, [user, router]);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-[rgb(30,41,59)] ">

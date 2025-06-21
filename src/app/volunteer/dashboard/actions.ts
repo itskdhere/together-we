@@ -202,25 +202,6 @@ export async function joinEvent(eventId: string) {
     });
 
     // Track experience for the volunteer
-    const organization = await Organization.findOne({ events: event._id });
-    let organizationName = "Unknown Organization";
-    if (organization) {
-      const orgUser = await User.findOne({
-        data: organization._id,
-        type: "organization",
-      });
-      organizationName =
-        orgUser?.name || orgUser?.username || "Unknown Organization";
-    }
-
-    // const experienceEntry = {
-    //   eventName: event.name,
-    //   organizationName,
-    //   startTime: event.startTime,
-    //   endTime: event.endTime,
-    //   location: event.location,
-    // };
-
     await Volunteer.findByIdAndUpdate(volunteerId, {
       $push: { experience: eventId },
     });
