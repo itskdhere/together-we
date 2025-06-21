@@ -129,12 +129,18 @@ export default function SearchPage() {
         {/* Search Bar */}
         <div className="mb-8">
           <div className="flex gap-4">
+            {" "}
             <div className="flex-1">
               <Input
                 type="text"
                 placeholder="Search events, organizations, or locations..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleSearch();
+                  }
+                }}
                 className="w-full"
               />
             </div>

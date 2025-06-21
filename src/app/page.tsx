@@ -49,8 +49,8 @@ export default function Home() {
                 Get Help
               </Link>
               <Button
-                variant="outline"
-                className="bg-white text-rose-600 border-rose-200 shadow-[0_0_8px_2px_#fecdd3] hover:shadow-[0_0_16px_4px_#fecdd3] hover:bg-amber-50 transition-all duration-200"
+                variant="default"
+                className="bg-zinc-200 text-zinc-900 border-rose-200 hover:shadow-[0_0_16px_4px_#fecdd3] hover:bg-amber-50 transition-all duration-200"
                 onClick={() => router.push("/signin")}
               >
                 Sign In
@@ -79,10 +79,10 @@ export default function Home() {
                 className="bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white px-8 py-4 text-lg rounded-full"
                 onClick={() => router.push("/signup")}
               >
-                Join as Volunteer
-                <ArrowRight className="ml-2 h-5 w-5" />
+                Join Now
+                <ArrowRight className="ml-1 h-5 w-5" />
               </Button>
-              <Button
+              {/* <Button
                 size="lg"
                 variant="outline"
                 className="bg-white text-rose-600 border-rose-200 hover:bg-rose-50 px-8 py-4 text-lg rounded-full"
@@ -90,7 +90,7 @@ export default function Home() {
               >
                 Join as Organisation
                 <HandHeart className="ml-2 h-5 w-5" />
-              </Button>
+              </Button> */}
             </div>
           </div>
 
@@ -243,7 +243,7 @@ export default function Home() {
                   className="bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white px-8 py-4 text-lg rounded-full"
                   onClick={() => router.push("/signup")}
                 >
-                  Start Volunteering Today
+                  Be a Part of the Change
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </div>
@@ -308,11 +308,11 @@ export default function Home() {
 
                 <Button
                   size="lg"
-                  variant="outline"
-                  className="bg-white text-rose-600 border-rose-200 hover:bg-rose-50 px-8 py-4 text-lg rounded-full"
+                  variant="default"
+                  className="bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white px-8 py-4 text-lg rounded-full"
                   onClick={() => router.push("/signup")}
                 >
-                  Request Help Now
+                  Start Your Journey
                   <HandHeart className="ml-2 h-5 w-5" />
                 </Button>
               </div>
@@ -476,10 +476,10 @@ export default function Home() {
                 className="bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white px-8 py-4 text-lg rounded-full"
                 onClick={() => router.push("/signup")}
               >
-                Become a Volunteer
+                Join Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button
+              {/* <Button
                 size="lg"
                 variant="outline"
                 className="bg-white text-rose-600 border-rose-200 hover:bg-rose-50 px-8 py-4 text-lg rounded-full"
@@ -487,7 +487,7 @@ export default function Home() {
               >
                 Get Help Today
                 <HandHeart className="ml-2 h-5 w-5" />
-              </Button>
+              </Button> */}
             </div>
           </div>
         </section>
@@ -623,7 +623,7 @@ export default function Home() {
 
             <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
               <p className="text-gray-400 text-sm">
-                © 2024 Heroes Unite. All rights reserved.
+                © 2025 Unity. All rights reserved.
               </p>
               <div className="flex space-x-4 mt-4 md:mt-0">
                 <Link

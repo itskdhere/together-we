@@ -254,33 +254,36 @@ export default function NewVolunteerOpportunityPage() {
       setIsSubmitting(false);
     }
   };
-
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-900 p-6">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm" onClick={() => router.back()}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => router.back()}
+              className="text-gray-300 hover:text-white hover:bg-gray-700"
+            >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Dashboard
             </Button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-white">
                 Create Volunteer Opportunity
               </h1>
-              <p className="text-gray-600 mt-1">
+              <p className="text-gray-300 mt-1">
                 Connect with volunteers who want to make a difference
               </p>
             </div>
           </div>
-        </div>
-
+        </div>{" "}
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Basic Information */}
-          <Card>
+          <Card className="bg-gray-800 border-gray-700">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-white">
                 <Heart className="w-5 h-5" />
                 Opportunity Details
               </CardTitle>
@@ -288,30 +291,39 @@ export default function NewVolunteerOpportunityPage() {
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="md:col-span-2">
-                  <Label htmlFor="title">Opportunity Title *</Label>
+                  <Label htmlFor="title" className="text-gray-300">
+                    Opportunity Title *
+                  </Label>
                   <Input
                     id="title"
                     value={formData.title}
                     onChange={(e) => handleInputChange("title", e.target.value)}
                     placeholder="e.g., Help serve meals at local shelter"
                     required
+                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="category">Category *</Label>
+                  <Label htmlFor="category" className="text-gray-300">
+                    Category *
+                  </Label>
                   <Select
                     value={formData.category}
                     onValueChange={(value) =>
                       handleInputChange("category", value)
                     }
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-gray-700 border-gray-600">
                       {volunteerCategories.map((category) => (
-                        <SelectItem key={category} value={category}>
+                        <SelectItem
+                          key={category}
+                          value={category}
+                          className="text-white hover:bg-gray-600"
+                        >
                           {category}
                         </SelectItem>
                       ))}
@@ -320,7 +332,9 @@ export default function NewVolunteerOpportunityPage() {
                 </div>
 
                 <div>
-                  <Label htmlFor="volunteersNeeded">Volunteers Needed *</Label>
+                  <Label htmlFor="volunteersNeeded" className="text-gray-300">
+                    Volunteers Needed *
+                  </Label>
                   <Input
                     id="volunteersNeeded"
                     type="number"
@@ -331,11 +345,14 @@ export default function NewVolunteerOpportunityPage() {
                     }
                     placeholder="Number of volunteers"
                     required
+                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                  <Label htmlFor="description">Description *</Label>
+                  <Label htmlFor="description" className="text-gray-300">
+                    Description *
+                  </Label>
                   <Textarea
                     id="description"
                     value={formData.description}
@@ -345,16 +362,16 @@ export default function NewVolunteerOpportunityPage() {
                     placeholder="Describe what volunteers will be doing, the impact they'll make, and what to expect..."
                     rows={4}
                     required
+                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                   />
                 </div>
               </div>
             </CardContent>
-          </Card>
-
+          </Card>{" "}
           {/* Date & Time */}
-          <Card>
+          <Card className="bg-gray-800 border-gray-700">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-white">
                 <Clock className="w-5 h-5" />
                 Schedule
               </CardTitle>
@@ -367,24 +384,32 @@ export default function NewVolunteerOpportunityPage() {
                   onCheckedChange={(checked) =>
                     handleInputChange("isRecurring", checked)
                   }
+                  className="border-gray-600"
                 />
-                <Label htmlFor="isRecurring">Recurring Opportunity</Label>
+                <Label htmlFor="isRecurring" className="text-gray-300">
+                  Recurring Opportunity
+                </Label>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <Label htmlFor="date">Date *</Label>
+                  <Label htmlFor="date" className="text-gray-300">
+                    Date *
+                  </Label>
                   <Input
                     id="date"
                     type="date"
                     value={formData.date}
                     onChange={(e) => handleInputChange("date", e.target.value)}
                     required
+                    className="bg-gray-700 border-gray-600 text-white"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="startTime">Start Time *</Label>
+                  <Label htmlFor="startTime" className="text-gray-300">
+                    Start Time *
+                  </Label>
                   <Input
                     id="startTime"
                     type="time"
@@ -393,11 +418,14 @@ export default function NewVolunteerOpportunityPage() {
                       handleInputChange("startTime", e.target.value)
                     }
                     required
+                    className="bg-gray-700 border-gray-600 text-white"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="endTime">End Time</Label>
+                  <Label htmlFor="endTime" className="text-gray-300">
+                    End Time
+                  </Label>
                   <Input
                     id="endTime"
                     type="time"
@@ -405,6 +433,7 @@ export default function NewVolunteerOpportunityPage() {
                     onChange={(e) =>
                       handleInputChange("endTime", e.target.value)
                     }
+                    className="bg-gray-700 border-gray-600 text-white"
                   />
                 </div>
 
@@ -426,7 +455,9 @@ export default function NewVolunteerOpportunityPage() {
 
               {formData.isRecurring && (
                 <div>
-                  <Label htmlFor="recurringPattern">Recurring Pattern</Label>
+                  <Label htmlFor="recurringPattern" className="text-gray-300">
+                    Recurring Pattern
+                  </Label>
                   <Input
                     id="recurringPattern"
                     value={formData.recurringPattern}
@@ -434,12 +465,13 @@ export default function NewVolunteerOpportunityPage() {
                       handleInputChange("recurringPattern", e.target.value)
                     }
                     placeholder="e.g., Every Saturday, Weekly, Monthly"
+                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                   />
                 </div>
               )}
 
               <div>
-                <Label htmlFor="applicationDeadline">
+                <Label htmlFor="applicationDeadline" className="text-gray-300">
                   Application Deadline
                 </Label>
                 <Input
@@ -449,15 +481,15 @@ export default function NewVolunteerOpportunityPage() {
                   onChange={(e) =>
                     handleInputChange("applicationDeadline", e.target.value)
                   }
+                  className="bg-gray-700 border-gray-600 text-white"
                 />
               </div>
             </CardContent>
-          </Card>
-
+          </Card>{" "}
           {/* Location */}
-          <Card>
+          <Card className="bg-gray-800 border-gray-700">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-white">
                 <MapPin className="w-5 h-5" />
                 Location
               </CardTitle>
@@ -476,7 +508,7 @@ export default function NewVolunteerOpportunityPage() {
 
               {formData.isRemote ? (
                 <div>
-                  <Label htmlFor="onlineInstructions">
+                  <Label htmlFor="onlineInstructions" className="text-gray-300">
                     Online Instructions
                   </Label>
                   <Textarea
@@ -487,11 +519,14 @@ export default function NewVolunteerOpportunityPage() {
                     }
                     placeholder="Provide details about how volunteers can participate remotely..."
                     rows={3}
+                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                   />
                 </div>
               ) : (
                 <div>
-                  <Label htmlFor="location">Location Address *</Label>
+                  <Label htmlFor="location" className="text-gray-300">
+                    Location Address *
+                  </Label>
                   <Input
                     id="location"
                     value={formData.location}
@@ -500,16 +535,16 @@ export default function NewVolunteerOpportunityPage() {
                     }
                     placeholder="Enter full address..."
                     required={!formData.isRemote}
+                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                   />
                 </div>
               )}
             </CardContent>
-          </Card>
-
+          </Card>{" "}
           {/* Requirements */}
-          <Card>
+          <Card className="bg-gray-800 border-gray-700">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-white">
                 <Star className="w-5 h-5" />
                 Volunteer Requirements
               </CardTitle>
@@ -517,28 +552,49 @@ export default function NewVolunteerOpportunityPage() {
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="ageRequirement">Age Requirement</Label>
+                  <Label htmlFor="ageRequirement" className="text-gray-300">
+                    Age Requirement
+                  </Label>
                   <Select
                     value={formData.ageRequirement}
                     onValueChange={(value) =>
                       handleInputChange("ageRequirement", value)
                     }
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
                       <SelectValue placeholder="Select age requirement" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="no-restriction">
+                    <SelectContent className="bg-gray-700 border-gray-600">
+                      <SelectItem
+                        value="no-restriction"
+                        className="text-white hover:bg-gray-600"
+                      >
                         No Age Restriction
                       </SelectItem>
-                      <SelectItem value="13+">
+                      <SelectItem
+                        value="13+"
+                        className="text-white hover:bg-gray-600"
+                      >
                         13+ (with parent/guardian)
                       </SelectItem>
-                      <SelectItem value="16+">
+                      <SelectItem
+                        value="16+"
+                        className="text-white hover:bg-gray-600"
+                      >
                         16+ (with parent/guardian)
                       </SelectItem>
-                      <SelectItem value="18+">18+ (adults only)</SelectItem>
-                      <SelectItem value="21+">21+ (adults only)</SelectItem>
+                      <SelectItem
+                        value="18+"
+                        className="text-white hover:bg-gray-600"
+                      >
+                        18+ (adults only)
+                      </SelectItem>
+                      <SelectItem
+                        value="21+"
+                        className="text-white hover:bg-gray-600"
+                      >
+                        21+ (adults only)
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -551,8 +607,12 @@ export default function NewVolunteerOpportunityPage() {
                       onCheckedChange={(checked) =>
                         handleInputChange("backgroundCheckRequired", checked)
                       }
+                      className="border-gray-600"
                     />
-                    <Label htmlFor="backgroundCheckRequired">
+                    <Label
+                      htmlFor="backgroundCheckRequired"
+                      className="text-gray-300"
+                    >
                       Background Check Required
                     </Label>
                   </div>
@@ -564,8 +624,9 @@ export default function NewVolunteerOpportunityPage() {
                       onCheckedChange={(checked) =>
                         handleInputChange("trainingProvided", checked)
                       }
+                      className="border-gray-600"
                     />
-                    <Label htmlFor="trainingProvided">
+                    <Label htmlFor="trainingProvided" className="text-gray-300">
                       Training Will Be Provided
                     </Label>
                   </div>
@@ -574,20 +635,22 @@ export default function NewVolunteerOpportunityPage() {
 
               {/* Skills Required */}
               <div>
-                <Label>Skills/Qualifications Required</Label>
+                <Label className="text-gray-300">
+                  Skills/Qualifications Required
+                </Label>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {formData.skillsRequired.map((skill) => (
                     <Badge
                       key={skill}
                       variant="secondary"
-                      className="flex items-center gap-1"
+                      className="flex items-center gap-1 bg-gray-700 text-gray-200 border-gray-600"
                     >
                       {skill}
                       <Button
                         type="button"
                         variant="ghost"
                         size="sm"
-                        className="h-auto p-0 ml-1"
+                        className="h-auto p-0 ml-1 text-gray-400 hover:text-red-400"
                         onClick={() => handleRemoveSkill(skill)}
                       >
                         <X className="w-3 h-3" />
@@ -605,18 +668,20 @@ export default function NewVolunteerOpportunityPage() {
                       e.key === "Enter" &&
                       (e.preventDefault(), handleAddSkill(newSkill))
                     }
+                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                   />
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => handleAddSkill(newSkill)}
+                    className="bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600"
                   >
                     <Plus className="w-4 h-4" />
                   </Button>
                 </div>
 
                 <div className="mt-2">
-                  <p className="text-sm text-gray-600 mb-2">Common skills:</p>
+                  <p className="text-sm text-gray-400 mb-2">Common skills:</p>
                   <div className="flex flex-wrap gap-2">
                     {commonSkills
                       .filter(
@@ -629,6 +694,7 @@ export default function NewVolunteerOpportunityPage() {
                           variant="outline"
                           size="sm"
                           onClick={() => handleAddSkill(skill)}
+                          className="bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600"
                         >
                           {skill}
                         </Button>
@@ -637,12 +703,11 @@ export default function NewVolunteerOpportunityPage() {
                 </div>
               </div>
             </CardContent>
-          </Card>
-
+          </Card>{" "}
           {/* Contact Information */}
-          <Card>
+          <Card className="bg-gray-800 border-gray-700">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-white">
                 <Users className="w-5 h-5" />
                 Contact Information
               </CardTitle>
@@ -650,7 +715,9 @@ export default function NewVolunteerOpportunityPage() {
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="contactEmail">Contact Email *</Label>
+                  <Label htmlFor="contactEmail" className="text-gray-300">
+                    Contact Email *
+                  </Label>
                   <Input
                     id="contactEmail"
                     type="email"
@@ -660,11 +727,14 @@ export default function NewVolunteerOpportunityPage() {
                     }
                     placeholder="volunteer@organization.org"
                     required
+                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="contactPhone">Contact Phone</Label>
+                  <Label htmlFor="contactPhone" className="text-gray-300">
+                    Contact Phone
+                  </Label>
                   <Input
                     id="contactPhone"
                     type="tel"
@@ -673,16 +743,16 @@ export default function NewVolunteerOpportunityPage() {
                       handleInputChange("contactPhone", e.target.value)
                     }
                     placeholder="(555) 123-4567"
+                    className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                   />
                 </div>
               </div>
             </CardContent>
-          </Card>
-
+          </Card>{" "}
           {/* Tags */}
-          <Card>
+          <Card className="bg-gray-800 border-gray-700">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-white">
                 <Tag className="w-5 h-5" />
                 Tags
               </CardTitle>
@@ -693,14 +763,14 @@ export default function NewVolunteerOpportunityPage() {
                   <Badge
                     key={tag}
                     variant="secondary"
-                    className="flex items-center gap-1"
+                    className="flex items-center gap-1 bg-gray-700 text-gray-200 border-gray-600"
                   >
                     {tag}
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
-                      className="h-auto p-0 ml-1"
+                      className="h-auto p-0 ml-1 text-gray-400 hover:text-red-400"
                       onClick={() => handleRemoveTag(tag)}
                     >
                       <X className="w-3 h-3" />
@@ -718,18 +788,20 @@ export default function NewVolunteerOpportunityPage() {
                     e.key === "Enter" &&
                     (e.preventDefault(), handleAddTag(newTag))
                   }
+                  className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"
                 />
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => handleAddTag(newTag)}
+                  className="bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600"
                 >
                   <Plus className="w-4 h-4" />
                 </Button>
               </div>
 
               <div>
-                <p className="text-sm text-gray-600 mb-2">Suggested tags:</p>
+                <p className="text-sm text-gray-400 mb-2">Suggested tags:</p>
                 <div className="flex flex-wrap gap-2">
                   {commonTags
                     .filter((tag) => !formData.tags.includes(tag))
@@ -740,6 +812,7 @@ export default function NewVolunteerOpportunityPage() {
                         variant="outline"
                         size="sm"
                         onClick={() => handleAddTag(tag)}
+                        className="bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600"
                       >
                         {tag}
                       </Button>
@@ -747,38 +820,39 @@ export default function NewVolunteerOpportunityPage() {
                 </div>
               </div>
             </CardContent>
-          </Card>
-
+          </Card>{" "}
           {/* Image Upload */}
-          <Card>
+          <Card className="bg-gray-800 border-gray-700">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-white">
                 <Upload className="w-5 h-5" />
                 Opportunity Image
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                <Label htmlFor="image">Upload Image (Optional)</Label>
+                <Label htmlFor="image" className="text-gray-300">
+                  Upload Image (Optional)
+                </Label>
                 <Input
                   id="image"
                   type="file"
                   accept="image/*"
                   onChange={handleImageUpload}
+                  className="bg-gray-700 border-gray-600 text-white file:bg-gray-600 file:text-white file:border-0"
                 />
                 {formData.image && (
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-300">
                     Selected: {formData.image.name}
                   </p>
                 )}
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-400">
                   Images help volunteers visualize the opportunity and increase
                   engagement
                 </p>
               </div>
             </CardContent>
           </Card>
-
           {/* Submit Buttons */}
           <div className="flex justify-end gap-4">
             <Button
@@ -786,10 +860,15 @@ export default function NewVolunteerOpportunityPage() {
               variant="outline"
               onClick={() => router.back()}
               disabled={isSubmitting}
+              className="bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600"
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
               {isSubmitting ? (
                 "Creating..."
               ) : (

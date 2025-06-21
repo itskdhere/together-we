@@ -19,13 +19,12 @@ export default function AuthCallback() {
     }
     checkAuthStatus();
   }, [router]);
-
   return (
-    <div className="w-full mt-24 flex justify-center">
-      <div className="flex flex-col items-center gap-2">
-        <Loader2 className="size-8 animate-spin text-zinc-500" />
-        <h3 className="font-semibold text-xl">Logging you in...</h3>
-        <p>You will be redirected automatically.</p>
+    <div className="w-full flex justify-center bg-gray-900 min-h-screen">
+      <div className="flex flex-col items-center gap-2 mt-24">
+        <Loader2 className="size-8 animate-spin text-gray-400" />
+        <h3 className="font-semibold text-xl text-white">Logging you in...</h3>
+        <p className="text-gray-300">You will be redirected automatically.</p>
       </div>
     </div>
   );
