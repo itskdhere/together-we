@@ -5,6 +5,7 @@ import { dbConnect } from "@/lib/db";
 import { User } from "@/models/User";
 import { Organization } from "@/models/Organization";
 import { Event } from "@/models/Events";
+import { Volunteer } from "@/models/Volunteers";
 
 export interface CreateVolunteerOpportunityInput {
   title: string;
@@ -457,6 +458,137 @@ export async function deleteAllVolunteerOpportunities() {
     return {
       success: false,
       message: "Failed to delete volunteer opportunities",
+    };
+  }
+}
+
+export async function getOrganizationVolunteers() {
+  try {
+    await dbConnect();
+
+    const user = await getUser();
+    if (!user?.id || !user?.email) {
+      return {
+        success: false,
+        message: "Not authenticated",
+        volunteers: [],
+      };
+    }
+
+    // Find the organization user
+    const organizationUser = await User.findOne({
+      civicId: user.id,
+      email: user.email,
+      type: "organization",
+      onboarded: true,
+    });
+
+    if (!organizationUser) {
+      return {
+        success: false,
+        message: "Organization not found",
+        volunteers: [],
+      };
+    }
+
+    // Get the organization and populate events
+    const organization = await Organization.findById(
+      organizationUser.data
+    ).populate({
+      path: "events",
+      model: "Event",
+      populate: {
+        path: "joinedVolunteers",
+        model: "Volunteer",
+      },
+    });
+
+    if (!organization) {
+      return {
+        success: false,
+        message: "Organization data not found",
+        volunteers: [],
+      };
+    }
+
+    // Collect all unique volunteers from organization events
+    const volunteerSet = new Set();
+    const volunteerData = new Map();
+
+    for (const event of organization.events || []) {
+      if (event.joinedVolunteers) {
+        for (const volunteer of event.joinedVolunteers) {
+          if (!volunteerSet.has(volunteer._id.toString())) {
+            volunteerSet.add(volunteer._id.toString());
+
+            // Get user data for this volunteer
+            const volunteerUser = await User.findOne({
+              data: volunteer._id,
+              type: "volunteer",
+            });
+            if (volunteerUser) {
+              // Count events this volunteer joined for this organization
+              const eventsJoined = organization.events.filter((e: any) =>
+                e.joinedVolunteers?.some(
+                  (v: any) => v._id.toString() === volunteer._id.toString()
+                )
+              ).length;
+
+              // Count completed events (past events)
+              const completedEvents = organization.events.filter(
+                (e: any) =>
+                  e.joinedVolunteers?.some(
+                    (v: any) => v._id.toString() === volunteer._id.toString()
+                  ) && new Date(e.endTime) < new Date()
+              ).length;
+
+              volunteerData.set(volunteer._id.toString(), {
+                id: volunteer._id.toString(),
+                name: volunteerUser.name || "Unknown",
+                username: volunteerUser.username || "",
+                email: volunteerUser.email,
+                skills: volunteer.skills || "No skills listed",
+                eventsJoined,
+                completedEvents,
+                totalHours: completedEvents * 4, // Assume 4 hours per event
+                status: eventsJoined > completedEvents ? "active" : "completed",
+                joinedDate: volunteerUser.createdAt || new Date(),
+                bio: volunteerUser.bio || "",
+              });
+            }
+          }
+        }
+      }
+    }
+
+    const volunteers = Array.from(volunteerData.values()).sort(
+      (a, b) =>
+        new Date(b.joinedDate).getTime() - new Date(a.joinedDate).getTime()
+    );
+
+    return {
+      success: true,
+      volunteers,
+      summary: {
+        totalVolunteers: volunteers.length,
+        activeVolunteers: volunteers.filter((v) => v.status === "active")
+          .length,
+        totalHours: volunteers.reduce((sum, v) => sum + v.totalHours, 0),
+        averageEvents:
+          volunteers.length > 0
+            ? Math.round(
+                volunteers.reduce((sum, v) => sum + v.eventsJoined, 0) /
+                  volunteers.length
+              )
+            : 0,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching organization volunteers:", error);
+    return {
+      success: false,
+      message: "Failed to fetch volunteers",
+      volunteers: [],
     };
   }
 }

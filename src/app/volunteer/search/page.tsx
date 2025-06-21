@@ -13,8 +13,6 @@ import {
   MapPin,
   Clock,
   Users,
-  Heart,
-  Filter,
 } from "lucide-react";
 import { searchEvents } from "./actions";
 import { toast } from "sonner";
@@ -60,9 +58,6 @@ export default function SearchPage() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center space-x-2">
-              <div className="bg-gradient-to-r from-blue-500 to-indigo-500 p-2 rounded-xl">
-                <Heart className="h-6 w-6 text-white" />
-              </div>
               <span className="text-xl font-bold text-gray-900">Unity</span>
             </div>
 
@@ -109,7 +104,7 @@ export default function SearchPage() {
             <div className="flex items-center space-x-3">
               <Button
                 variant="ghost"
-                className="text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                className="text-red-500 hover:text-red-400 hover:bg-gray-50"
                 onClick={() => signOut()}
               >
                 Logout
@@ -151,10 +146,10 @@ export default function SearchPage() {
               <SearchIcon className="h-4 w-4 mr-2" />
               {loading ? "Searching..." : "Search"}
             </Button>
-            <Button variant="outline">
+            {/* <Button variant="outline">
               <Filter className="h-4 w-4 mr-2" />
               Filters
-            </Button>
+            </Button> */}
           </div>
         </div>
 

@@ -371,7 +371,7 @@ export default function NewVolunteerOpportunityPage() {
                 <Label htmlFor="isRecurring">Recurring Opportunity</Label>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <Label htmlFor="date">Date *</Label>
                   <Input
@@ -408,7 +408,7 @@ export default function NewVolunteerOpportunityPage() {
                   />
                 </div>
 
-                <div>
+                {/* <div>
                   <Label htmlFor="duration">Duration (hours)</Label>
                   <Input
                     id="duration"
@@ -421,7 +421,7 @@ export default function NewVolunteerOpportunityPage() {
                     }
                     placeholder="e.g., 3"
                   />
-                </div>
+                </div> */}
               </div>
 
               {formData.isRecurring && (

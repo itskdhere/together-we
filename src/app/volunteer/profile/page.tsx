@@ -16,7 +16,7 @@ import {
   Award,
   Calendar,
   Clock,
-  MapPin,
+  Loader2,
 } from "lucide-react";
 import {
   getProfileData,
@@ -90,7 +90,81 @@ export default function ProfilePage() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        {/* Navigation Bar */}
+        <nav className="bg-white shadow-sm border-b sticky top-0 z-10">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between h-16">
+              {/* Logo */}
+              <div className="flex items-center space-x-2">
+                <span className="text-xl font-bold text-gray-900">Unity</span>
+              </div>
+
+              {/* Navigation Links */}
+              <div className="flex items-center space-x-8">
+                <Link
+                  href="/volunteer/dashboard"
+                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
+                    activeTab === "dashboard"
+                      ? "text-blue-600 bg-blue-50"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  }`}
+                  onClick={() => setActiveTab("dashboard")}
+                >
+                  <Home className="h-4 w-4" />
+                  <span>Dashboard</span>
+                </Link>
+                <Link
+                  href="/volunteer/search"
+                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
+                    activeTab === "search"
+                      ? "text-blue-600 bg-blue-50"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  }`}
+                  onClick={() => setActiveTab("search")}
+                >
+                  <Search className="h-4 w-4" />
+                  <span>Search</span>
+                </Link>
+                <Link
+                  href="/volunteer/profile"
+                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
+                    activeTab === "profile"
+                      ? "text-blue-600 bg-blue-50"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  }`}
+                  onClick={() => setActiveTab("profile")}
+                >
+                  <User className="h-4 w-4" />
+                  <span>Profile</span>
+                </Link>
+              </div>
+
+              <div className="flex items-center space-x-3">
+                <Button
+                  variant="ghost"
+                  className="text-red-500 hover:text-red-400 hover:bg-gray-50"
+                  onClick={() => signOut()}
+                >
+                  Logout
+                </Button>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        {/* Main Content */}
+        <main className="container mx-auto px-4 py-8">
+          <div className="w-full mt-24 flex justify-center">
+            <div className="flex flex-col items-center gap-2">
+              <Loader2 className="size-8 animate-spin text-zinc-500" />
+              <h3 className="font-semibold text-xl">Loading...</h3>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
   }
 
   return (
@@ -101,9 +175,6 @@ export default function ProfilePage() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center space-x-2">
-              <div className="bg-gradient-to-r from-blue-500 to-indigo-500 p-2 rounded-xl">
-                <Heart className="h-6 w-6 text-white" />
-              </div>
               <span className="text-xl font-bold text-gray-900">Unity</span>
             </div>
 
@@ -150,7 +221,7 @@ export default function ProfilePage() {
             <div className="flex items-center space-x-3">
               <Button
                 variant="ghost"
-                className="text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                className="text-red-500 hover:text-red-400 hover:bg-gray-50"
                 onClick={() => signOut()}
               >
                 Logout

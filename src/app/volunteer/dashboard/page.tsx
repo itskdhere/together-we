@@ -196,7 +196,7 @@ export default function VolunteerDashboard() {
             <div className="flex items-center space-x-3">
               <Button
                 variant="ghost"
-                className="text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                className="text-red-500 hover:text-red-400 hover:bg-gray-50"
                 onClick={() => signOut()}
               >
                 Logout
@@ -226,7 +226,7 @@ export default function VolunteerDashboard() {
           <>
             {/* Quick Stats */}
             <h2 className="text-2xl font-semibold text-gray-900 mb-6">
-              Quick Stats
+              My Quick Stats
             </h2>
             <section className="mb-12">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -290,13 +290,13 @@ export default function VolunteerDashboard() {
                 <h2 className="text-2xl font-semibold text-gray-900">
                   Featured Events
                 </h2>
-                <Button
+                {/* <Button
                   variant="outline"
                   className="flex items-center space-x-2"
                 >
                   <span>View All</span>
                   <ChevronRight className="h-4 w-4" />
-                </Button>
+                </Button> */}
               </div>
 
               {featuredEvents.length === 0 ? (

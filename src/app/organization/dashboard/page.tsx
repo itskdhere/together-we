@@ -11,11 +11,9 @@ import {
   Calendar,
   Target,
   TrendingUp,
-  Bell,
   Plus,
   BarChart3,
   Activity,
-  Heart,
   UserCheck,
   Clock,
   MapPin,
@@ -28,6 +26,7 @@ import {
   getOrganizationStats,
   deleteAllVolunteerOpportunities,
   deleteVolunteerOpportunity,
+  getOrganizationVolunteers,
 } from "../events/new/actions";
 import { useUser } from "@civic/auth/react";
 
@@ -58,6 +57,27 @@ interface Goal {
   deadline: string;
 }
 
+interface Volunteer {
+  id: string;
+  name: string;
+  username: string;
+  email: string;
+  skills: string;
+  eventsJoined: number;
+  completedEvents: number;
+  totalHours: number;
+  status: "active" | "completed";
+  joinedDate: Date;
+  bio: string;
+}
+
+interface VolunteerSummary {
+  totalVolunteers: number;
+  activeVolunteers: number;
+  totalHours: number;
+  averageEvents: number;
+}
+
 export default function OrganizationDashboard() {
   const { user, signOut } = useUser();
   const router = useRouter();
@@ -74,6 +94,13 @@ export default function OrganizationDashboard() {
     VolunteerOpportunity[]
   >([]);
   const [activeGoals, setActiveGoals] = useState<Goal[]>([]);
+  const [volunteers, setVolunteers] = useState<Volunteer[]>([]);
+  const [volunteerSummary, setVolunteerSummary] = useState<VolunteerSummary>({
+    totalVolunteers: 0,
+    activeVolunteers: 0,
+    totalHours: 0,
+    averageEvents: 0,
+  });
   const [loading, setLoading] = useState(true);
   const fetchDashboardData = async () => {
     try {
@@ -132,6 +159,16 @@ export default function OrganizationDashboard() {
           },
         ]);
       }
+
+      // Fetch volunteers data
+      const volunteersResult = await getOrganizationVolunteers();
+      console.log("Volunteers result:", volunteersResult);
+      if (volunteersResult.success) {
+        setVolunteers(volunteersResult.volunteers);
+        if (volunteersResult.summary) {
+          setVolunteerSummary(volunteersResult.summary);
+        }
+      }
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
     } finally {
@@ -141,7 +178,7 @@ export default function OrganizationDashboard() {
 
   const handleDeleteAllOpportunities = async () => {
     const confirmed = window.confirm(
-      "Are you sure you want to delete ALL volunteer opportunities? This action cannot be undone."
+      "Are you sure you want to delete ALL events? This action cannot be undone."
     );
 
     if (!confirmed) return;
@@ -263,7 +300,7 @@ export default function OrganizationDashboard() {
             <div className="flex items-center space-x-3">
               <Button
                 variant="ghost"
-                className="text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                className="text-red-500 hover:text-red-400 hover:bg-gray-50"
                 onClick={() => signOut()}
               >
                 Logout
@@ -283,7 +320,7 @@ export default function OrganizationDashboard() {
                 Hello, {user?.name || "Organization"}!
               </h1>
               <p className="text-gray-600 mt-1">
-                Connect with volunteers and manage opportunities
+                Connect with volunteers and manage events
               </p>
             </div>{" "}
             <div className="flex gap-2">
@@ -322,111 +359,113 @@ export default function OrganizationDashboard() {
             </div>
           </div>
 
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">
-                      Total Volunteers
-                    </p>
-                    <p className="text-2xl font-bold text-gray-900">
-                      {stats.totalVolunteers.toLocaleString()}
-                    </p>
-                  </div>
-                  <Users className="w-8 h-8 text-blue-600" />
-                </div>
-                <div className="mt-2 flex items-center text-sm">
-                  <TrendingUp className="w-4 h-4 text-green-600 mr-1" />
-                  <span className="text-green-600">+{stats.growthRate}%</span>
-                  <span className="text-gray-600 ml-1">from last month</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">
-                      Active Opportunities
-                    </p>
-                    <p className="text-2xl font-bold text-gray-900">
-                      {stats.activeOpportunities}
-                    </p>
-                  </div>
-                  <Calendar className="w-8 h-8 text-purple-600" />
-                </div>{" "}
-                <div className="mt-2 flex items-center text-sm text-gray-600">
-                  <Activity className="w-4 h-4 mr-1" />
-                  <span>
-                    {Math.ceil(stats.activeOpportunities / 2)} this week
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">
-                      Completed Projects
-                    </p>
-                    <p className="text-2xl font-bold text-gray-900">
-                      {stats.completedProjects}
-                    </p>
-                  </div>
-                  <Target className="w-8 h-8 text-green-600" />
-                </div>{" "}
-                <div className="mt-2 flex items-center text-sm text-gray-600">
-                  <UserCheck className="w-4 h-4 mr-1" />
-                  <span>
-                    {Math.ceil(stats.completedProjects / 10)} this month
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">
-                      Total Hours Logged
-                    </p>
-                    <p className="text-2xl font-bold text-gray-900">
-                      {stats.totalHoursLogged.toLocaleString()}
-                    </p>
-                  </div>
-                  <Clock className="w-8 h-8 text-orange-600" />
-                </div>{" "}
-                <div className="mt-2 flex items-center text-sm text-gray-600">
-                  <BarChart3 className="w-4 h-4 mr-1" />
-                  <span>
-                    {Math.ceil(stats.totalHoursLogged / 7)} hours this month
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
           {/* Main Content */}
           <Tabs defaultValue="overview" className="space-y-6">
             <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="opportunities">Opportunities</TabsTrigger>
+              <TabsTrigger value="overview">Events</TabsTrigger>
               <TabsTrigger value="volunteers">Volunteers</TabsTrigger>
-              <TabsTrigger value="analytics">Analytics</TabsTrigger>
             </TabsList>
-
             <TabsContent value="overview" className="space-y-6">
+              <div className="text-center py-4 text-gray-500">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-gray-600">
+                            Total Volunteers
+                          </p>
+                          <p className="text-2xl font-bold text-gray-900">
+                            {stats.totalVolunteers.toLocaleString()}
+                          </p>
+                        </div>
+                        <Users className="w-8 h-8 text-blue-600" />
+                      </div>
+                      <div className="mt-2 flex items-center text-sm">
+                        <TrendingUp className="w-4 h-4 text-green-600 mr-1" />
+                        <span className="text-green-600">
+                          +{stats.growthRate}%
+                        </span>
+                        <span className="text-gray-600 ml-1">
+                          from last month
+                        </span>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-gray-600">
+                            Active Events
+                          </p>
+                          <p className="text-2xl font-bold text-gray-900">
+                            {stats.activeOpportunities}
+                          </p>
+                        </div>
+                        <Calendar className="w-8 h-8 text-purple-600" />
+                      </div>{" "}
+                      <div className="mt-2 flex items-center text-sm text-gray-600">
+                        <Activity className="w-4 h-4 mr-1" />
+                        <span>
+                          {Math.ceil(stats.activeOpportunities / 2)} this week
+                        </span>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-gray-600">
+                            Completed Projects
+                          </p>
+                          <p className="text-2xl font-bold text-gray-900">
+                            {stats.completedProjects}
+                          </p>
+                        </div>
+                        <Target className="w-8 h-8 text-green-600" />
+                      </div>{" "}
+                      <div className="mt-2 flex items-center text-sm text-gray-600">
+                        <UserCheck className="w-4 h-4 mr-1" />
+                        <span>
+                          {Math.ceil(stats.completedProjects / 10)} this month
+                        </span>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-gray-600">
+                            Total Hours Logged
+                          </p>
+                          <p className="text-2xl font-bold text-gray-900">
+                            {stats.totalHoursLogged.toLocaleString()}
+                          </p>
+                        </div>
+                        <Clock className="w-8 h-8 text-orange-600" />
+                      </div>{" "}
+                      <div className="mt-2 flex items-center text-sm text-gray-600">
+                        <BarChart3 className="w-4 h-4 mr-1" />
+                        <span>
+                          {Math.ceil(stats.totalHoursLogged / 7)} hours this
+                          month
+                        </span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Recent Opportunities */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Recent Volunteer Opportunities</CardTitle>
+                    <CardTitle>Recent Events</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
@@ -483,7 +522,7 @@ export default function OrganizationDashboard() {
                       className="w-full mt-4"
                       onClick={fetchDashboardData}
                     >
-                      Refresh Opportunities
+                      Refresh Events
                     </Button>
                   </CardContent>
                 </Card>
@@ -517,56 +556,209 @@ export default function OrganizationDashboard() {
                 </Card>
               </div>
             </TabsContent>
-
-            <TabsContent value="opportunities">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Volunteer Opportunities Management</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-center py-8 text-gray-500">
-                    <Heart className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                    <p>Manage all your volunteer opportunities here</p>
-                    <Button
-                      className="mt-4"
-                      onClick={() => router.push("/organization/events/new")}
-                    >
-                      Create New Opportunity
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
             <TabsContent value="volunteers">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Volunteer Management</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-center py-8 text-gray-500">
-                    <Users className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                    <p>View and manage your volunteers</p>
-                    <Button variant="outline" className="mt-4">
-                      View All Volunteers
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
+              <div className="space-y-6">
+                {/* Volunteer Summary Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-gray-600">
+                            Total Volunteers
+                          </p>
+                          <p className="text-2xl font-bold text-blue-600">
+                            {volunteerSummary.totalVolunteers}
+                          </p>
+                        </div>
+                        <Users className="w-8 h-8 text-blue-500" />
+                      </div>
+                    </CardContent>
+                  </Card>
 
-            <TabsContent value="analytics">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Volunteer Analytics & Reports</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-center py-8 text-gray-500">
-                    <BarChart3 className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                    <p>Track volunteer engagement and impact</p>
-                  </div>
-                </CardContent>
-              </Card>{" "}
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-gray-600">
+                            Active Volunteers
+                          </p>
+                          <p className="text-2xl font-bold text-green-600">
+                            {volunteerSummary.activeVolunteers}
+                          </p>
+                        </div>
+                        <UserCheck className="w-8 h-8 text-green-500" />
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-gray-600">
+                            Total Hours
+                          </p>
+                          <p className="text-2xl font-bold text-orange-600">
+                            {volunteerSummary.totalHours}
+                          </p>
+                        </div>
+                        <Clock className="w-8 h-8 text-orange-500" />
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-gray-600">
+                            Avg Events/Volunteer
+                          </p>
+                          <p className="text-2xl font-bold text-purple-600">
+                            {volunteerSummary.averageEvents}
+                          </p>
+                        </div>
+                        <Activity className="w-8 h-8 text-purple-500" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Volunteers List */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Your Volunteers</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {loading ? (
+                      <div className="text-center py-8">
+                        <RefreshCw className="w-8 h-8 animate-spin mx-auto mb-4 text-gray-400" />
+                        <p className="text-gray-500">Loading volunteers...</p>
+                      </div>
+                    ) : volunteers.length === 0 ? (
+                      <div className="text-center py-8 text-gray-500">
+                        <Users className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                        <p>No volunteers have joined your events yet.</p>
+                        <p className="text-sm">
+                          Create events to attract volunteers!
+                        </p>
+                        <Button
+                          className="mt-4"
+                          onClick={() =>
+                            router.push("/organization/events/new")
+                          }
+                        >
+                          <Plus className="w-4 h-4 mr-2" />
+                          Create Event
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {volunteers.map((volunteer) => (
+                          <div
+                            key={volunteer.id}
+                            className="border rounded-lg p-4 hover:bg-gray-50 transition-colors"
+                          >
+                            <div className="flex items-start justify-between">
+                              <div className="flex-1">
+                                <div className="flex items-center gap-3 mb-2">
+                                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <span className="font-semibold text-blue-600">
+                                      {volunteer.name.charAt(0).toUpperCase()}
+                                    </span>
+                                  </div>
+                                  <div>
+                                    <h4 className="font-semibold text-gray-900">
+                                      {volunteer.name}
+                                    </h4>
+                                    <p className="text-sm text-gray-600">
+                                      @{volunteer.username}
+                                    </p>
+                                  </div>
+                                  <Badge
+                                    variant={
+                                      volunteer.status === "active"
+                                        ? "default"
+                                        : "secondary"
+                                    }
+                                  >
+                                    {volunteer.status}
+                                  </Badge>
+                                </div>
+
+                                {volunteer.bio && (
+                                  <p className="text-sm text-gray-600 mb-3">
+                                    {volunteer.bio}
+                                  </p>
+                                )}
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                                  <div>
+                                    <span className="font-medium text-gray-700">
+                                      Events Joined:
+                                    </span>
+                                    <span className="ml-2 text-blue-600">
+                                      {volunteer.eventsJoined}
+                                    </span>
+                                  </div>
+                                  <div>
+                                    <span className="font-medium text-gray-700">
+                                      Completed:
+                                    </span>
+                                    <span className="ml-2 text-green-600">
+                                      {volunteer.completedEvents}
+                                    </span>
+                                  </div>
+                                  <div>
+                                    <span className="font-medium text-gray-700">
+                                      Hours:
+                                    </span>
+                                    <span className="ml-2 text-orange-600">
+                                      {volunteer.totalHours}h
+                                    </span>
+                                  </div>
+                                  <div>
+                                    <span className="font-medium text-gray-700">
+                                      Joined:
+                                    </span>
+                                    <span className="ml-2 text-gray-600">
+                                      {new Date(
+                                        volunteer.joinedDate
+                                      ).toLocaleDateString()}
+                                    </span>
+                                  </div>
+                                </div>
+
+                                {volunteer.skills && (
+                                  <div className="mt-3">
+                                    <span className="text-sm font-medium text-gray-700">
+                                      Skills:
+                                    </span>
+                                    <div className="flex flex-wrap gap-1 mt-1">
+                                      {volunteer.skills
+                                        .split(",")
+                                        .map((skill, index) => (
+                                          <Badge
+                                            key={index}
+                                            variant="outline"
+                                            className="text-xs"
+                                          >
+                                            {skill.trim()}
+                                          </Badge>
+                                        ))}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
             </TabsContent>
           </Tabs>
         </div>
