@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { CivicAuthProvider } from "@civic/auth/nextjs";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Together We",
-  description: "Together We",
+  title: "Unity",
+  description: "When Help is Needed, People Unite",
 };
 
 export default function RootLayout({
@@ -29,6 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <CivicAuthProvider iframeMode="embedded">{children}</CivicAuthProvider>
+        <Toaster />
       </body>
     </html>
   );

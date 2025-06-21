@@ -38,12 +38,17 @@ export async function getAuthStatus() {
         success: true,
         url: "/onboard",
       };
+    } else if (!existingUser.onboarded) {
+      return { success: true, url: "/onboard" };
+    } else {
+      if (existingUser.type === "volunteer") {
+        return { success: true, url: "/volunteer/dashboard" };
+      } else if (existingUser.type === "organization") {
+        return { success: true, url: "/organization/dashboard" };
+      } else {
+        return { success: true, url: "/" };
+      }
     }
-
-    return {
-      success: true,
-      url: "/dashboard",
-    };
   } catch (error) {
     console.error("Failed to save user to database:", error);
     throw error;
