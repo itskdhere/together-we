@@ -20,7 +20,12 @@ class PyObjectId(ObjectId):
             return ObjectId(v)
         raise TypeError("Invalid ObjectId")
 
-# Badges
+# Enums for strict schema validation
+CategoryEnum = Literal["NGO", "School", "Company"]
+SkillEnum = Literal["teaching", "first aid", "organization", "teamwork", "security", "media"]
+TypeEnum = Literal["volunteer", "admin", "judge", "security", "speaker", "media"]
+
+# Badge
 class Badge(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     name: str
@@ -33,15 +38,16 @@ class Badge(BaseModel):
 
 # User
 class User(BaseModel):
-    id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     Name: Optional[str]
     username: Optional[str]
     email: str
-    oidcId: str
+    civicId: str
     bio: Optional[str]
-    type: Optional[str]
+    type: Optional[TypeEnum]
     data: Optional[PyObjectId] = None
     createdAt: Optional[datetime]
+    updatedAt: Optional[datetime]
 
     class Config:
         validate_by_name = True
@@ -50,38 +56,42 @@ class User(BaseModel):
 # Organization
 class Organization(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-    category: Optional[str]  # Replace with Literal[...] if you know the enum values
+    category: CategoryEnum
     locality: Optional[str]
-    events: Optional[List[PyObjectId]]
+    events: List[PyObjectId] = []
 
     class Config:
         validate_by_name = True
         arbitrary_types_allowed = True
 
-# Volunteers
+# Volunteer
 class Volunteer(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-    skills: Optional[str]  # Replace with List[Literal[...]] if you know the enum values
-    experience: Optional[List[PyObjectId]]
-    badges: Optional[List[PyObjectId]]
+    skills: SkillEnum
+    experience: List[PyObjectId] = []
+    badges: List[PyObjectId] = []
 
     class Config:
         validate_by_name = True
         arbitrary_types_allowed = True
 
-# Messages
-class Message(BaseModel):
+# Event
+class Event(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-    senderId: PyObjectId
-    receiverId: PyObjectId
-    conversationId: Optional[List[PyObjectId]]
-    content: str
+    name: str
+    description: str
+    volunteerCap: int
+    location: str
+    requiredSkills: SkillEnum
+    startTime: datetime
+    endTime: datetime
+    joinedVolunteers: List[PyObjectId] = []
 
     class Config:
         validate_by_name = True
         arbitrary_types_allowed = True
 
-# Conversations
+# Conversation
 class Conversation(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     user1: PyObjectId
@@ -91,17 +101,13 @@ class Conversation(BaseModel):
         validate_by_name = True
         arbitrary_types_allowed = True
 
-# Events
-class Event(BaseModel):
+# Message
+class Message(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-    name: str
-    description: str
-    volunteerCap: int
-    location: str
-    requiredSkills: Optional[str]  # Replace with List[Literal[...]] if you know the enum values
-    startTime: datetime
-    endTime: datetime
-    joinedVolunteers: Optional[List[PyObjectId]]
+    senderId: PyObjectId
+    receiverId: PyObjectId
+    conversationId: List[PyObjectId] = []
+    content: str
 
     class Config:
         validate_by_name = True

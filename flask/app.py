@@ -1,63 +1,114 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, redirect, url_for, request
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
-from schema import User,Conversation # Import specific model
+from bson import ObjectId
+from civic_auth.integrations.flask import init_civic_auth, create_auth_blueprint, get_civic_auth, civic_auth_required
+from flask import render_template_string
+import inspect
 
 load_dotenv()
 
-def env(var:str):
+def env(var: str):
     return os.getenv(var)
 
 mongoclient = MongoClient(env("DB_URL"))
 db = mongoclient[env("DB_NAME")]
 
+
+print("Collections in DB:", db.list_collection_names())
+
 app = Flask(__name__)
+app.secret_key = env("SECRET_KEY")
+
+config = {
+    "client_id": env("CIVIC_CLIENT_ID"),  # Client ID from auth.civic.com
+    "redirect_url": "http://localhost:5000/auth/callback",  # change to your domain when deploying
+    "post_logout_redirect_url": "http://localhost:5000/"  # The postLogoutRedirectUrl is the URL where the user will be redirected after successfully logging out from Civic's auth server.
+}
+init_civic_auth(app, config)
+app.register_blueprint(create_auth_blueprint(config))
 
 
-user = db.users.find_one({"username":"alice123" })
-  # Convert ObjectId to string for easier 
-@app.route('/')
-def index():
-    return  "Welcome to the API!"
 
-@app.get('/<username>/conversation')
-def get_conversation(username: str):
-    user = db.users.find_one({"username": username})
-    if (not user):
-        return {"error": "User not found"}, 404
-    try:
-        user["_id"] = str(user["_id"])
-    except KeyError:
-        return {"error": "key not found"}, 503
+@app.route("/")
+async def home():
+    """Home page - shows login button or redirects if logged in."""
+    auth = await get_civic_auth()
     
-    user_data = User(**user)
-    user_id = user_data.id
-    conversation = db.conversations.find(
-        {"$or": [
-            {"user1": user_id},
-            {"user2": user_id}
-        ]})
+    if not auth.is_logged_in():
+        return redirect(url_for("civic_auth.login"))
+    return redirect("/admin")
+    
 
-    if not conversation:
-        return {"waring": "Conversation not found"},204
-    conversation = tuple(conversation)
-    conversation_list = {}
-    for conv in conversation:
-        conversation_list["conv_id"]=str(conv["_id"])
-        if user_id == str(conv["user1"]):
-            sender_id = conv["user2"]
-        else:
-            sender_id = conv["user1"]
+@app.route("/admin")
+@civic_auth_required
+async def admin():
+    return render_template_string("""
+    <html>
+        <head>
+            <title>Admin Dashboard</title>
+        </head>
+        <body>
+            <h1>Welcome to the Admin Dashboard</h1>
+            <p>You are logged in!</p>
+            <a href="/auth/logout">Logout</a>
+        </body>
+    </html>
+    """)
+
+@app.post("/test2")
+def test2():
+    print(request.headers)
+    return jsonify({"message": "Server is running"}), 200
+
+@app.route('/test')
+@civic_auth_required
+async def test():
+    auth = await get_civic_auth()
+    user = auth.get_user()
+    # Return a list of all collection names in the current database
+    collections = db.list_collection_names()
+    return jsonify({"collections": collections}), 200
+
+@app.route('/logout')
+def logout():
+    return redirect(url_for("civic_auth.logout", next="/"))
+
+@app.get('/profile')
+async def profile():
+    auth = await get_civic_auth()
+    civicuser = auth.get_user()
+    if civicuser is not None and inspect.iscoroutine(civicuser):
+        civicuser = await civicuser
         
-        sender = db.users.find_one({"_id": sender_id})
-        if not sender:
-            continue    
-        conversation_list["sender_id"] = str(sender_id)
-        conversation_list["sender_name"] = sender["Name"]
-        conversation_list["sender_username"] = sender["username"]
-        
-    return jsonify(conversation_list)
+    print(civicuser)
+    civicId = civicuser["id"]
+    civicemail = civicuser["email"]
+    
+    user = db.users.find_one({"civicId": civicId})
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    
+    if user["email"] != civicemail:
+        return jsonify({"error": "Email mismatch"}), 403
+    
+    userdata = db.volunteers.find_one({"_id": user["data"]})
+    if not userdata:
+        return jsonify({"error": "User data not found"}), 404
+    data = {
+        "name": user["name"],
+        "email": user["email"],
+        "username": user["username"],
+        "bio": user["bio"],
+        "type": user["type"],
+        "created_at": user["createdAt"],
+        "skills": userdata["skills"],
+    }   
+    
+    return jsonify(data), 200
+    return "hello"
+if __name__ == "__main__":
+    app.run(port=5000, debug=True)
 
 
-app.run(port=5000, debug=True)
