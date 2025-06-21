@@ -301,7 +301,7 @@ export default function OrganizationDashboard() {
               <Button
                 variant="ghost"
                 className="text-red-500 hover:text-red-400 hover:bg-gray-50"
-                onClick={() => signOut()}
+                onClick={signOut}
               >
                 Logout
               </Button>

@@ -43,7 +43,6 @@ interface EventData {
 }
 
 export default function VolunteerDashboard() {
-  const router = useRouter();
   const { signOut } = useUser();
   const [featuredEvents, setFeaturedEvents] = useState<EventData[]>([]);
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -197,7 +196,7 @@ export default function VolunteerDashboard() {
               <Button
                 variant="ghost"
                 className="text-red-500 hover:text-red-400 hover:bg-gray-50"
-                onClick={() => signOut()}
+                onClick={signOut}
               >
                 Logout
               </Button>

@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Together We",
-  description: "Together We",
+  title: "Unity",
+  description: "When Help is Needed, People Unite",
 };
 
 export default function RootLayout({

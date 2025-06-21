@@ -55,7 +55,7 @@ export default function OrganizationOnboard() {
             id="name"
             value={orgData.name}
             onChange={(e) => setOrgData({ ...orgData, name: e.target.value })}
-            placeholder="e.g. Together We"
+            placeholder="e.g. Unity"
             required
           />
         </div>
@@ -67,7 +67,7 @@ export default function OrganizationOnboard() {
             onChange={(e) =>
               setOrgData({ ...orgData, username: e.target.value })
             }
-            placeholder="e.g. togetherweorg"
+            placeholder="e.g. unity-org"
             required
           />
         </div>
