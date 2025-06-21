@@ -22,32 +22,29 @@ export default function Home() {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-orange-50">
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700">
         {/* Header */}
         <header className="container mx-auto px-4 py-6">
           <nav className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <div className="bg-gradient-to-r from-rose-500 to-orange-500 p-2 rounded-xl">
-                <Heart className="h-6 w-6 text-white" />
-              </div>
-              <span className="text-2xl font-bold text-gray-900">Unity</span>
+              <span className="text-2xl font-bold text-white">Unity</span>
             </div>
             <div className="hidden md:flex items-center space-x-6">
               <Link
                 href="#how-it-works"
-                className="text-gray-600 hover:text-gray-900 text-base hover:text-lg transform hover:scale-105 transition-all duration-200"
+                className="text-white text-base hover:text-lg transform hover:scale-105 transition-all duration-200"
               >
                 How It Works
               </Link>
               <Link
                 href="#volunteers"
-                className="text-gray-600 hover:text-gray-900 text-base hover:text-lg transform hover:scale-105 transition-all duration-200"
+                className="text-white text-base hover:text-lg transform hover:scale-105 transition-all duration-200"
               >
                 For Volunteers
               </Link>
               <Link
                 href="#requesters"
-                className="text-gray-600 hover:text-gray-900 text-base hover:text-lg transform hover:scale-105 transition-all duration-200"
+                className="text-white text-base hover:text-lg transform hover:scale-105 transition-all duration-200"
               >
                 Get Help
               </Link>
@@ -65,13 +62,13 @@ export default function Home() {
         {/* Hero Section */}
         <section className="container mx-auto px-4 py-16 text-center">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              When Help is Needed,{" "}
-              <span className="bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-transparent">
-                Heroes Unite
+            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+              When Help is Needed, People{" "}
+              <span className="bg-gradient-to-r from-rose-600 via-rose-500 to-orange-600 bg-clip-text text-transparent">
+                Unite
               </span>
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl text-white mb-8 max-w-2xl mx-auto leading-relaxed">
               Connect with local volunteers ready to help, or become a hero in
               your community. Together, we make a difference one act of kindness
               at a time.
@@ -110,28 +107,31 @@ export default function Home() {
         </section>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="py-20 bg-white">
+        <section
+          id="how-it-works"
+          className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700"
+        >
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="text-4xl font-bold text-white mb-4">
                 How Unity Works
               </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              <p className="text-xl text-white max-w-2xl mx-auto">
                 Getting help or helping others is simple with our three-step
                 process
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <Card className="text-center p-8 border-0 shadow-lg hover:shadow-xl transition-shadow rounded-2xl">
+              <Card className="text-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 p-8 border border-transparent hover:border-rose-600 hover:shadow-[0_0_20px_2px_#e11d48] rounded-2xl transform hover:scale-[1.015] transition-all duration-200">
                 <CardContent className="pt-6">
                   <div className="bg-gradient-to-r from-rose-500 to-orange-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                     <HandHeart className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  <h3 className="text-2xl font-bold text-white mb-4">
                     1. Request Help
                   </h3>
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-white leading-relaxed">
                     Post your request with details about what you need. Whether
                     it's groceries, transportation, or companionship, help is
                     just a tap away.
@@ -139,15 +139,15 @@ export default function Home() {
                 </CardContent>
               </Card>
 
-              <Card className="text-center p-8 border-0 shadow-lg hover:shadow-xl transition-shadow rounded-2xl">
+              <Card className="text-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 p-8 border border-transparent hover:border-orange-700 hover:shadow-[0_0_20px_2px_#e11d48] rounded-2xl transform hover:scale-[1.015] transition-all duration-200">
                 <CardContent className="pt-6">
                   <div className="bg-gradient-to-r from-rose-500 to-orange-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                     <Users className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  <h3 className="text-2xl font-bold text-white mb-4">
                     2. Get Matched
                   </h3>
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-white leading-relaxed">
                     Our smart matching system connects you with nearby
                     volunteers who have the skills and availability to help with
                     your specific needs.
@@ -155,15 +155,15 @@ export default function Home() {
                 </CardContent>
               </Card>
 
-              <Card className="text-center p-8 border-0 shadow-lg hover:shadow-xl transition-shadow rounded-2xl">
+              <Card className="text-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 p-8 border border-transparent hover:border-orange-700 hover:shadow-[0_0_20px_2px_#e11d48] rounded-2xl transform hover:scale-[1.015] transition-all duration-200">
                 <CardContent className="pt-6">
                   <div className="bg-gradient-to-r from-rose-500 to-orange-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                     <CheckCircle className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  <h3 className="text-2xl font-bold text-white mb-4">
                     3. Receive Support
                   </h3>
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-white leading-relaxed">
                     Connect with your volunteer hero, coordinate the help, and
                     experience the power of community support when you need it
                     most.
@@ -177,15 +177,15 @@ export default function Home() {
         {/* For Volunteers Section */}
         <section
           id="volunteers"
-          className="p-20 bg-gradient-to-r from-rose-50 to-orange-50"
+          className="p-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700"
         >
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-4xl font-bold text-gray-900 mb-6">
+                <h2 className="text-4xl font-bold text-white mb-6">
                   Become a Community Hero
                 </h2>
-                <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                <p className="text-xl text-white mb-8 leading-relaxed">
                   Join thousands of volunteers making a real difference in their
                   communities. Every act of kindness, no matter how small,
                   creates ripples of positive change.
@@ -197,10 +197,10 @@ export default function Home() {
                       <Clock className="h-6 w-6 text-rose-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 mb-2">
+                      <h3 className="font-semibold text-white mb-2">
                         Flexible Scheduling
                       </h3>
-                      <p className="text-gray-600">
+                      <p className="text-white">
                         Help when it works for you. Set your availability and
                         choose requests that fit your schedule.
                       </p>
@@ -212,10 +212,10 @@ export default function Home() {
                       <Shield className="h-6 w-6 text-rose-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 mb-2">
+                      <h3 className="font-semibold text-white mb-2">
                         Safe & Verified
                       </h3>
-                      <p className="text-gray-600">
+                      <p className="text-white">
                         All users are verified for safety. Help with confidence
                         in a secure environment.
                       </p>
@@ -227,10 +227,10 @@ export default function Home() {
                       <Zap className="h-6 w-6 text-rose-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 mb-2">
+                      <h3 className="font-semibold text-white mb-2">
                         Instant Impact
                       </h3>
-                      <p className="text-gray-600">
+                      <p className="text-white">
                         See the immediate difference you make in someone's life
                         and build lasting community connections.
                       </p>
@@ -260,7 +260,10 @@ export default function Home() {
         </section>
 
         {/* For Requesters Section */}
-        <section id="requesters" className="py-20 bg-white">
+        <section
+          id="requesters"
+          className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700"
+        >
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="bg-gradient-to-r from-rose-50 to-orange-50 p-8 rounded-3xl">
@@ -272,10 +275,10 @@ export default function Home() {
               </div>
 
               <div>
-                <h2 className="text-4xl font-bold text-gray-900 mb-6">
+                <h2 className="text-4xl font-bold text-white mb-6">
                   Get the Support You Need
                 </h2>
-                <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                <p className="text-xl text-white mb-8 leading-relaxed">
                   Life can be challenging, but you don't have to face it alone.
                   Our community of caring volunteers is here to help when you
                   need it most.
@@ -284,20 +287,20 @@ export default function Home() {
                 <div className="grid sm:grid-cols-2 gap-6 mb-8">
                   <div className="text-center p-6 bg-rose-50 rounded-2xl">
                     <MapPin className="h-8 w-8 text-rose-600 mx-auto mb-3" />
-                    <h3 className="font-semibold text-gray-900 mb-2">
+                    <h3 className="font-semibold text-grey-600 mb-2">
                       Local Support
                     </h3>
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-grey-600 text-sm">
                       Connect with helpers in your neighborhood
                     </p>
                   </div>
 
                   <div className="text-center p-6 bg-orange-50 rounded-2xl">
                     <Heart className="h-8 w-8 text-orange-600 mx-auto mb-3" />
-                    <h3 className="font-semibold text-gray-900 mb-2">
+                    <h3 className="font-semibold text-grey-600 mb-2">
                       Caring Community
                     </h3>
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-grey-600 text-sm">
                       Genuine people who want to help
                     </p>
                   </div>
@@ -348,13 +351,13 @@ export default function Home() {
         </section>
 
         {/* Testimonials Section */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="text-4xl font-bold text-white mb-4">
                 Stories from Our Community
               </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              <p className="text-xl text-white max-w-2xl mx-auto">
                 Real experiences from volunteers and those who've received help
               </p>
             </div>
@@ -495,10 +498,7 @@ export default function Home() {
             <div className="grid md:grid-cols-4 gap-8">
               <div>
                 <div className="flex items-center space-x-2 mb-6">
-                  <div className="bg-gradient-to-r from-rose-500 to-orange-500 p-2 rounded-xl">
-                    <Heart className="h-6 w-6 text-white" />
-                  </div>
-                  <span className="text-2xl font-bold">Heroes Unite</span>
+                  <span className="text-2xl font-bold">Unity</span>
                 </div>
                 <p className="text-gray-400 leading-relaxed">
                   Connecting communities through acts of kindness and mutual
