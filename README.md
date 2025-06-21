@@ -1,141 +1,107 @@
-# QuickAid
+# Unity
 
-[![Docker Build Check](https://github.com/itskdhere/QuickAid/actions/workflows/docker_build_check.yml/badge.svg)](https://github.com/itskdhere/QuickAid/actions/workflows/docker_build_check.yml)
-[![Release Docker Images](https://github.com/itskdhere/QuickAid/actions/workflows/release.yml/badge.svg)](https://github.com/itskdhere/QuickAid/actions/workflows/release.yml)
-
-🤖 AI-Powered Medical Assistance at Your Fingertips 💊
+🌍 **Empowering Communities, One Connection at a Time** 🤝
 
 ## 📋 Overview
 
-QuickAid is a comprehensive healthcare platform designed to provide immediate medical assistance and community support. The application combines AI-powered medical advice, emergency services access, community support, and health resources in one easy-to-use platform.
+Unity is a collaborative platform designed to connect volunteers, organizations, and individuals for social good. The application streamlines event management and volunteering opportunities in a single, user-friendly interface.
 
 ## ✨ Features
 
-- 🩺 **Self Diagnostics**: Get AI-powered symptoms analysis and preliminary guidance.
-- 📍 **Find Nearby**: Locate the closest hospitals, clinics, and emergency services in your area.
-- 🚨 **Emergency Assistance** - Get ambulance services with your exact location details.
-- 👥 **Community Support**: Connect with others and share health-related experiences.
-- 💡 **Health Tips**: Get personalized health tips and advice based on your profile.
-- 📞 **Emergency Contacts**: Quick access to emergency contacts and helplines.
+- 📝 **Event Management**: Create, join, and manage community events.
+- 🧑‍🤝‍🧑 **Volunteer Matching**: Find and connect with volunteering opportunities that match your skills.
+- 🏢 **Organization Profiles**: Organizations can post events, manage volunteers, and track participation.
+- 📍 **Location-Based Discovery**: Find events and organizations near you.
+- 🔒 **Authentication**: Secure login and onboarding with Civic Auth.
 
 ## 📁 Project Structure
 
-- 🧠 **ai**: Python-based AI RAG service using Flask, Google Generative AI and Sentence-Transformers for medical assistance.
-- 💻 **client**: React frontend built with TypeScript, Vite, Tailwind CSS, and ShadCN/UI components.
-- 📃 **docs**: Documentation for the project.
-- ⚙️ **etc**: Nginx configuration, SSL certificates, and other configuration files.
-- 🗄️ **server**: Node.js backend with Express, TypeScript, MongoDB, authentication, and API routes.
-- 🏗️ **terraform**: Infrastructure as Code for deployment to Google Cloud Platform.
-- 🐳 **docker-compose.yml**: Docker Compose file for production deployment.
+- `src/` — Next.js 15 app directory, React components, and all frontend logic
+  - `app/` — Application routes and pages
+  - `components/` — Reusable React components
+  - `lib/` — Utilities and database connection logic
+  - `models/` — Mongoose models for MongoDB collections
+- `public/` — Static assets
 
 ## 🛠️ Technologies
 
-- 🎨 **Frontend:** TypeScript, Vite, React 18, React Router, Tailwind CSS, ShadCN/UI, Framer Motion, Lucide React, Axios.
-
-- 🔧 **Backend:** TypeScript, Node.js, Express.js, Passport.js, JWT, Bcrypt, Axios, Mongoose ODM, AI SDK, Zod, DotEnv, ESbuild.
-
-- 🌐 **APIs:** Gemini API, Google Maps API.
-
-- 🗃️ **Database:** MongoDB.
-
-- 🤖 **AI:** Python, Flask, Sentence-Transformers, Vertex AI, BigQuery.
-
-- 🚀 **DevOps**: Nginx, Docker, Docker Compose, Terraform, Google Cloud Platform, GitHub Actions, Docker Hub.
+- **Frontend:** TypeScript, Next.js 15, React 19, Tailwind CSS, ShadCN/UI, Lucide React
+- **Backend:** Next.js API Routes, Mongoose ODM, Civic Auth
+- **Database:** MongoDB
 
 ## 🎯 Local Setup
 
-### 📋 Prerequisites
+### Prerequisites
 
-- 🟢 Node.js (v22 or higher)
-- 🐍 Python (v3.13 or higher)
-- 🗃️ MongoDB (local or cloud instance)
-- ☁️ Google Cloud Platform (with billing enabled)
-- 🐳 Docker and Docker Compose (optional)
+- Node.js (v22 or higher)
+- MongoDB (local or cloud instance)
 
-### ⚙️ Installation & Setup
+### Installation & Setup
 
-1. 📥 Clone the repository:
+1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/itskdhere/QuickAid.git
-   cd QuickAid
+   git clone <your-repo-url>
+   cd unity
    ```
 
-2. 🔧 Set up environment variables:
+2. **Set up environment variables:**
 
    ```bash
    cp .env.example .env
    ```
 
-   Edit the `.env` file with your configuration.
+   Edit the `.env` file with your configuration (see below for required variables).
 
-3. 🐳 Start the development environment with Docker:
+3. **Install dependencies:**
+
    ```bash
-   docker compose up -d
+   npm install
    ```
 
-**Or,** Run Individual Services:
+4. **Run the development server:**
 
-- 💻 Frontend
+   ```bash
+   npm run dev
+   ```
 
-  ```bash
-  cd client
-  npm install
-  ```
+   The app will be available at [http://localhost:3000](http://localhost:3000).
 
-  ```bash
-  npm run dev
-  ```
+### Environment Variables
 
-- 🗄️ Backend
+- `MONGODB_URI` — MongoDB connection string
+- `CIVIC_AUTH_CLIENT_ID` — Civic Auth client ID
 
-  ```bash
-  cd server
-  npm install
-  ```
+## 🗄️ Mongoose Models
 
-  ```bash
-  npm run dev
-  ```
+- `User` — User profile and authentication
+- `Organization` — Organization details and events
+- `Event` — Community event details
+- `Volunteer` — Volunteer profile and skills
+- `Conversation` & `Message` — Messaging between users
 
-- 🧠 AI Service
+## 🧩 UI & Styling
 
-  ```bash
-  cd ai
-  pip install -r requirements.txt
-  python setup.py
-  ```
+- **Tailwind CSS** for utility-first styling
+- **ShadCN/UI** for component library
+- **Lucide React** for icons
 
-  ```bash
-  python app.py
-  ```
+## 🛡️ Authentication
 
-## 🚀 Deployment
+- Civic Auth integration for secure login and onboarding
+- Auth-protected routes using Next.js middleware
 
-The application can be deployed using Terraform to Google Cloud Platform.
+## 📝 Scripts
 
-```bash
-cd terraform
-terraform init
-terraform plan
-```
-
-```bash
-terraform apply
-```
+- `npm run dev` — Start development server
+- `npm run build` — Build for production
+- `npm run start` — Start production server
+- `npm run lint` — Lint codebase
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
-1. 🍴 Fork the repository [here](https://github.com/itskdhere/QuickAid/fork)
-2. 🌟 Create your feature branch: `git checkout -b feature/amazing-feature`
-3. 💾 Commit your changes: `git commit -m 'Add some amazing feature'`
-4. 📤 Push to the branch: `git push origin feature/amazing-feature`
-5. 📬 Open a Pull Request
+## 📄 License
 
----
-
-<p align="center">
-Built with 💜 by Turing Devs
-</p>
+[MIT](LICENSE)
