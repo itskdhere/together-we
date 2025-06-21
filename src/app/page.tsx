@@ -306,7 +306,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <Button
+                {/* <Button
                   size="lg"
                   variant="default"
                   className="bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white px-8 py-4 text-lg rounded-full"
@@ -314,14 +314,14 @@ export default function Home() {
                 >
                   Start Your Journey
                   <HandHeart className="ml-2 h-5 w-5" />
-                </Button>
+                </Button> */}
               </div>
             </div>
           </div>
         </section>
 
         {/* Impact Section */}
-        <section className="py-20 bg-gradient-to-r from-rose-500 to-orange-500 text-white">
+        {/* <section className="py-20 bg-gradient-to-r from-rose-500 to-orange-500 text-white">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-4xl font-bold mb-4">Our Growing Impact</h2>
             <p className="text-xl opacity-90 mb-12 max-w-2xl mx-auto">
@@ -348,10 +348,10 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Testimonials Section */}
-        <section className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700">
+        {/* <section className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold text-white mb-4">
@@ -458,15 +458,15 @@ export default function Home() {
               </Card>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-rose-50 to-orange-50">
+        <section className="py-20 bg-gradient-to-r from-rose-400 to-orange-400">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">
               Ready to Make a Difference?
             </h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
               Join our community today and be part of something bigger than
               yourself
             </p>
