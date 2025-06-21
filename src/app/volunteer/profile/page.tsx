@@ -1,0 +1,381 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Home,
+  Search,
+  User,
+  Edit,
+  Save,
+  Heart,
+  Award,
+  Calendar,
+  Clock,
+  MapPin,
+} from "lucide-react";
+import {
+  getProfileData,
+  updateProfileData,
+  getRecentActivity,
+} from "@/app/volunteer/profile/actions";
+import { toast } from "sonner";
+import { useUser } from "@civic/auth/react";
+
+export default function ProfilePage() {
+  const { signOut } = useUser();
+  const [activeTab, setActiveTab] = useState("profile");
+  const [isEditing, setIsEditing] = useState(false);
+  const [profile, setProfile] = useState({
+    name: "",
+    email: "",
+    bio: "",
+    skills: "",
+  });
+  const [activities, setActivities] = useState<
+    {
+      id: string;
+      title: string;
+      timeAgo: string;
+      type: string;
+    }[]
+  >([]);
+  const [stats, setStats] = useState({
+    eventsJoined: 0,
+    hoursVolunteered: 0,
+    organizationsHelped: 0,
+  });
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        // Fetch profile data
+        const profileResult = await getProfileData();
+        if (profileResult.success) {
+          console.log(profileResult.profile);
+          setProfile(profileResult.profile);
+        } else {
+          toast.error(profileResult.error);
+        }
+
+        // Fetch activity data
+        const activityResult = await getRecentActivity();
+        if (activityResult.success) {
+          setActivities(activityResult.activities);
+          setStats(activityResult.stats);
+        } else {
+          toast.error(activityResult.error);
+        }
+      } catch (error) {
+        toast.error("Failed to load data");
+      }
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  const handleSave = async () => {
+    setIsEditing(false);
+    const result = await updateProfileData(profile);
+    if (result.success) {
+      toast.success(result.message);
+    } else {
+      toast.error(result.error);
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      {/* Navigation Bar */}
+      <nav className="bg-white shadow-sm border-b sticky top-0 z-10">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <div className="flex items-center space-x-2">
+              <div className="bg-gradient-to-r from-blue-500 to-indigo-500 p-2 rounded-xl">
+                <Heart className="h-6 w-6 text-white" />
+              </div>
+              <span className="text-xl font-bold text-gray-900">Unity</span>
+            </div>
+
+            {/* Navigation Links */}
+            <div className="flex items-center space-x-8">
+              <Link
+                href="/volunteer/dashboard"
+                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
+                  activeTab === "dashboard"
+                    ? "text-blue-600 bg-blue-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                }`}
+                onClick={() => setActiveTab("dashboard")}
+              >
+                <Home className="h-4 w-4" />
+                <span>Dashboard</span>
+              </Link>
+              <Link
+                href="/volunteer/search"
+                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
+                  activeTab === "search"
+                    ? "text-blue-600 bg-blue-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                }`}
+                onClick={() => setActiveTab("search")}
+              >
+                <Search className="h-4 w-4" />
+                <span>Search</span>
+              </Link>
+              <Link
+                href="/volunteer/profile"
+                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
+                  activeTab === "profile"
+                    ? "text-blue-600 bg-blue-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                }`}
+                onClick={() => setActiveTab("profile")}
+              >
+                <User className="h-4 w-4" />
+                <span>Profile</span>
+              </Link>
+            </div>
+
+            <div className="flex items-center space-x-3">
+              <Button
+                variant="ghost"
+                className="text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                onClick={() => signOut()}
+              >
+                Logout
+              </Button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Content */}
+      <main className="container mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto">
+          {/* Profile Header */}
+          <div className="mb-8">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                  My Profile
+                </h1>
+                <p className="text-gray-600">
+                  Manage your volunteer profile and preferences.
+                </p>
+              </div>
+              <Button
+                variant={isEditing ? "default" : "outline"}
+                onClick={isEditing ? handleSave : () => setIsEditing(true)}
+                className={
+                  isEditing
+                    ? "bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600"
+                    : ""
+                }
+              >
+                {isEditing ? (
+                  <>
+                    <Save className="h-4 w-4 mr-2" />
+                    Save Changes
+                  </>
+                ) : (
+                  <>
+                    <Edit className="h-4 w-4 mr-2" />
+                    Edit Profile
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Profile Information */}
+            <div className="lg:col-span-2 space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Personal Information</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Full Name
+                    </label>
+                    {isEditing ? (
+                      <Input
+                        value={profile.name}
+                        onChange={(e) =>
+                          setProfile({ ...profile, name: e.target.value })
+                        }
+                      />
+                    ) : (
+                      <p className="text-gray-900">{profile.name}</p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Email
+                    </label>
+                    <p className="text-gray-900">{profile.email}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Bio
+                    </label>
+                    {isEditing ? (
+                      <Textarea
+                        value={profile.bio}
+                        onChange={(e) =>
+                          setProfile({ ...profile, bio: e.target.value })
+                        }
+                        rows={3}
+                      />
+                    ) : (
+                      <p className="text-gray-900">{profile.bio}</p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Skills & Interests
+                    </label>
+                    {isEditing ? (
+                      <Textarea
+                        value={profile.skills}
+                        onChange={(e) =>
+                          setProfile({ ...profile, skills: e.target.value })
+                        }
+                        rows={2}
+                        placeholder="Enter skills separated by commas"
+                      />
+                    ) : (
+                      <p className="text-gray-900">{profile.skills}</p>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Stats and Achievements */}
+            <div className="space-y-6">
+              {/* Quick Stats */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Volunteer Stats</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-green-100 rounded-lg">
+                      <Heart className="h-5 w-5 text-green-600" />
+                    </div>{" "}
+                    <div>
+                      <p className="text-xl font-bold text-gray-900">
+                        {stats.eventsJoined}
+                      </p>
+                      <p className="text-xs text-gray-600">Events Joined</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-blue-100 rounded-lg">
+                      <Clock className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="text-xl font-bold text-gray-900">
+                        {stats.hoursVolunteered}
+                      </p>
+                      <p className="text-xs text-gray-600">Hours Volunteered</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-purple-100 rounded-lg">
+                      <Award className="h-5 w-5 text-purple-600" />
+                    </div>
+                    <div>
+                      <p className="text-xl font-bold text-gray-900">
+                        {stats.organizationsHelped}
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        Organizations Helped
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Recent Activity */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Recent Activity</CardTitle>
+                </CardHeader>{" "}
+                <CardContent className="space-y-3">
+                  {activities.length > 0 ? (
+                    activities.map((activity) => (
+                      <div
+                        key={activity.id}
+                        className="flex items-center space-x-3"
+                      >
+                        <div
+                          className={`p-1 rounded ${
+                            activity.type === "completed"
+                              ? "bg-green-100"
+                              : activity.type === "joined"
+                              ? "bg-blue-100"
+                              : "bg-purple-100"
+                          }`}
+                        >
+                          {activity.type === "completed" ? (
+                            <Award
+                              className={`h-3 w-3 ${
+                                activity.type === "completed"
+                                  ? "text-green-600"
+                                  : activity.type === "joined"
+                                  ? "text-blue-600"
+                                  : "text-purple-600"
+                              }`}
+                            />
+                          ) : (
+                            <Calendar
+                              className={`h-3 w-3 ${
+                                activity.type === "completed"
+                                  ? "text-green-600"
+                                  : activity.type === "joined"
+                                  ? "text-blue-600"
+                                  : "text-purple-600"
+                              }`}
+                            />
+                          )}
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium">
+                            {activity.title}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {activity.timeAgo}
+                          </p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-4">
+                      <p className="text-sm text-gray-500">
+                        No recent activity
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}

@@ -463,7 +463,7 @@ export default function NewVolunteerOpportunityPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-center space-x-2">
+              {/* <div className="flex items-center space-x-2">
                 <Checkbox
                   id="isRemote"
                   checked={formData.isRemote}
@@ -472,7 +472,7 @@ export default function NewVolunteerOpportunityPage() {
                   }
                 />
                 <Label htmlFor="isRemote">Remote/Virtual Opportunity</Label>
-              </div>
+              </div> */}
 
               {formData.isRemote ? (
                 <div>

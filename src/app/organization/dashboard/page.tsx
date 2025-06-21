@@ -59,7 +59,7 @@ interface Goal {
 }
 
 export default function OrganizationDashboard() {
-  const { user } = useUser();
+  const { user, signOut } = useUser();
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -248,301 +248,328 @@ export default function OrganizationDashboard() {
       </div>
     );
   }
-
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">
-              Hello, {user?.name || "Organization"}!
-            </h1>
-            <p className="text-gray-600 mt-1">
-              Connect with volunteers and manage opportunities
-            </p>
-          </div>{" "}
-          <div className="flex gap-2">
-            {" "}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={fetchDashboardData}
-              disabled={loading}
-            >
-              <RefreshCw
-                className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`}
-              />
-              Refresh
-            </Button>
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={handleDeleteAllOpportunities}
-              disabled={loading}
-            >
-              <Trash2 className="w-4 h-4 mr-2" />
-              Delete All
-            </Button>
-            <Button variant="outline" size="sm">
-              <Bell className="w-4 h-4 mr-2" />
-              Notifications
-            </Button>
-            <Button
-              size="sm"
-              onClick={() => router.push("/organization/events/new")}
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              New Opportunity
-            </Button>
+    <div className="min-h-screen bg-gray-50">
+      {/* Navigation Bar */}
+      <nav className="bg-white shadow-sm border-b sticky top-0 z-10">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <div className="flex items-center space-x-2">
+              <span className="text-xl font-bold text-gray-900">Unity</span>
+            </div>
+
+            {/* Logout Button */}
+            <div className="flex items-center space-x-3">
+              <Button
+                variant="ghost"
+                className="text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                onClick={() => signOut()}
+              >
+                Logout
+              </Button>
+            </div>
           </div>
         </div>
+      </nav>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">
-                    Total Volunteers
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {stats.totalVolunteers.toLocaleString()}
-                  </p>
+      {/* Main Content */}
+      <div className="p-6">
+        <div className="max-w-7xl mx-auto space-y-6">
+          {/* Header */}
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">
+                Hello, {user?.name || "Organization"}!
+              </h1>
+              <p className="text-gray-600 mt-1">
+                Connect with volunteers and manage opportunities
+              </p>
+            </div>{" "}
+            <div className="flex gap-2">
+              {" "}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={fetchDashboardData}
+                disabled={loading}
+              >
+                <RefreshCw
+                  className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`}
+                />
+                Refresh
+              </Button>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={handleDeleteAllOpportunities}
+                disabled={loading}
+              >
+                <Trash2 className="w-4 h-4 mr-2" />
+                Delete All Event(s)
+              </Button>
+              {/* <Button variant="outline" size="sm">
+              <Bell className="w-4 h-4 mr-2" />
+              Notifications
+            </Button> */}
+              <Button
+                size="sm"
+                onClick={() => router.push("/organization/events/new")}
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                New Event
+              </Button>
+            </div>
+          </div>
+
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">
+                      Total Volunteers
+                    </p>
+                    <p className="text-2xl font-bold text-gray-900">
+                      {stats.totalVolunteers.toLocaleString()}
+                    </p>
+                  </div>
+                  <Users className="w-8 h-8 text-blue-600" />
                 </div>
-                <Users className="w-8 h-8 text-blue-600" />
-              </div>
-              <div className="mt-2 flex items-center text-sm">
-                <TrendingUp className="w-4 h-4 text-green-600 mr-1" />
-                <span className="text-green-600">+{stats.growthRate}%</span>
-                <span className="text-gray-600 ml-1">from last month</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">
-                    Active Opportunities
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {stats.activeOpportunities}
-                  </p>
+                <div className="mt-2 flex items-center text-sm">
+                  <TrendingUp className="w-4 h-4 text-green-600 mr-1" />
+                  <span className="text-green-600">+{stats.growthRate}%</span>
+                  <span className="text-gray-600 ml-1">from last month</span>
                 </div>
-                <Calendar className="w-8 h-8 text-purple-600" />
-              </div>{" "}
-              <div className="mt-2 flex items-center text-sm text-gray-600">
-                <Activity className="w-4 h-4 mr-1" />
-                <span>
-                  {Math.ceil(stats.activeOpportunities / 2)} this week
-                </span>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">
-                    Completed Projects
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {stats.completedProjects}
-                  </p>
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">
+                      Active Opportunities
+                    </p>
+                    <p className="text-2xl font-bold text-gray-900">
+                      {stats.activeOpportunities}
+                    </p>
+                  </div>
+                  <Calendar className="w-8 h-8 text-purple-600" />
+                </div>{" "}
+                <div className="mt-2 flex items-center text-sm text-gray-600">
+                  <Activity className="w-4 h-4 mr-1" />
+                  <span>
+                    {Math.ceil(stats.activeOpportunities / 2)} this week
+                  </span>
                 </div>
-                <Target className="w-8 h-8 text-green-600" />
-              </div>{" "}
-              <div className="mt-2 flex items-center text-sm text-gray-600">
-                <UserCheck className="w-4 h-4 mr-1" />
-                <span>
-                  {Math.ceil(stats.completedProjects / 10)} this month
-                </span>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">
-                    Total Hours Logged
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {stats.totalHoursLogged.toLocaleString()}
-                  </p>
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">
+                      Completed Projects
+                    </p>
+                    <p className="text-2xl font-bold text-gray-900">
+                      {stats.completedProjects}
+                    </p>
+                  </div>
+                  <Target className="w-8 h-8 text-green-600" />
+                </div>{" "}
+                <div className="mt-2 flex items-center text-sm text-gray-600">
+                  <UserCheck className="w-4 h-4 mr-1" />
+                  <span>
+                    {Math.ceil(stats.completedProjects / 10)} this month
+                  </span>
                 </div>
-                <Clock className="w-8 h-8 text-orange-600" />
-              </div>{" "}
-              <div className="mt-2 flex items-center text-sm text-gray-600">
-                <BarChart3 className="w-4 h-4 mr-1" />
-                <span>
-                  {Math.ceil(stats.totalHoursLogged / 7)} hours this month
-                </span>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+              </CardContent>
+            </Card>
 
-        {/* Main Content */}
-        <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="opportunities">Opportunities</TabsTrigger>
-            <TabsTrigger value="volunteers">Volunteers</TabsTrigger>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
-          </TabsList>
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">
+                      Total Hours Logged
+                    </p>
+                    <p className="text-2xl font-bold text-gray-900">
+                      {stats.totalHoursLogged.toLocaleString()}
+                    </p>
+                  </div>
+                  <Clock className="w-8 h-8 text-orange-600" />
+                </div>{" "}
+                <div className="mt-2 flex items-center text-sm text-gray-600">
+                  <BarChart3 className="w-4 h-4 mr-1" />
+                  <span>
+                    {Math.ceil(stats.totalHoursLogged / 7)} hours this month
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
-          <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Recent Opportunities */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Recent Volunteer Opportunities</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {recentOpportunities.map((opportunity) => (
-                      <div
-                        key={opportunity.id}
-                        className="flex items-start justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
-                      >
-                        <div className="flex-1">
-                          <h4 className="font-medium text-gray-900">
-                            {opportunity.title}
-                          </h4>
-                          <div className="flex items-center gap-4 mt-1 text-sm text-gray-600">
-                            <span className="flex items-center gap-1">
-                              <Calendar className="w-3 h-3" />
-                              {opportunity.date}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <MapPin className="w-3 h-3" />
-                              {opportunity.location}
+          {/* Main Content */}
+          <Tabs defaultValue="overview" className="space-y-6">
+            <TabsList>
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="opportunities">Opportunities</TabsTrigger>
+              <TabsTrigger value="volunteers">Volunteers</TabsTrigger>
+              <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="overview" className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Recent Opportunities */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Recent Volunteer Opportunities</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {recentOpportunities.map((opportunity) => (
+                        <div
+                          key={opportunity.id}
+                          className="flex items-start justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                        >
+                          <div className="flex-1">
+                            <h4 className="font-medium text-gray-900">
+                              {opportunity.title}
+                            </h4>
+                            <div className="flex items-center gap-4 mt-1 text-sm text-gray-600">
+                              <span className="flex items-center gap-1">
+                                <Calendar className="w-3 h-3" />
+                                {opportunity.date}
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <MapPin className="w-3 h-3" />
+                                {opportunity.location}
+                              </span>
+                            </div>
+                            <div className="mt-2 text-sm">
+                              <span className="text-gray-600">
+                                {opportunity.volunteersRegistered}/
+                                {opportunity.volunteersNeeded} volunteers
+                              </span>
+                              <Badge variant="outline" className="ml-2 text-xs">
+                                {opportunity.category}
+                              </Badge>
+                            </div>{" "}
+                          </div>
+                          <div className="ml-4 flex items-center gap-2">
+                            {getStatusBadge(opportunity.status)}
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() =>
+                                handleDeleteOpportunity(
+                                  opportunity.id,
+                                  opportunity.title
+                                )
+                              }
+                              className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                            >
+                              <Trash2 className="w-3 h-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>{" "}
+                    <Button
+                      variant="outline"
+                      className="w-full mt-4"
+                      onClick={fetchDashboardData}
+                    >
+                      Refresh Opportunities
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Active Goals */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Organization Goals</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {activeGoals.map((goal) => (
+                        <div key={goal.id} className="space-y-2">
+                          <div className="flex justify-between items-center">
+                            <h4 className="font-medium">{goal.title}</h4>
+                            <span className="text-sm text-gray-600">
+                              {goal.progress.toLocaleString()} /{" "}
+                              {goal.target.toLocaleString()}
                             </span>
                           </div>
-                          <div className="mt-2 text-sm">
-                            <span className="text-gray-600">
-                              {opportunity.volunteersRegistered}/
-                              {opportunity.volunteersNeeded} volunteers
-                            </span>
-                            <Badge variant="outline" className="ml-2 text-xs">
-                              {opportunity.category}
-                            </Badge>
-                          </div>{" "}
+                          <Progress
+                            value={(goal.progress / goal.target) * 100}
+                          />
+                          <p className="text-xs text-gray-600">
+                            Due: {goal.deadline}
+                          </p>
                         </div>
-                        <div className="ml-4 flex items-center gap-2">
-                          {getStatusBadge(opportunity.status)}
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() =>
-                              handleDeleteOpportunity(
-                                opportunity.id,
-                                opportunity.title
-                              )
-                            }
-                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                          >
-                            <Trash2 className="w-3 h-3" />
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>{" "}
-                  <Button
-                    variant="outline"
-                    className="w-full mt-4"
-                    onClick={fetchDashboardData}
-                  >
-                    Refresh Opportunities
-                  </Button>
-                </CardContent>
-              </Card>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
 
-              {/* Active Goals */}
+            <TabsContent value="opportunities">
               <Card>
                 <CardHeader>
-                  <CardTitle>Organization Goals</CardTitle>
+                  <CardTitle>Volunteer Opportunities Management</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    {activeGoals.map((goal) => (
-                      <div key={goal.id} className="space-y-2">
-                        <div className="flex justify-between items-center">
-                          <h4 className="font-medium">{goal.title}</h4>
-                          <span className="text-sm text-gray-600">
-                            {goal.progress.toLocaleString()} /{" "}
-                            {goal.target.toLocaleString()}
-                          </span>
-                        </div>
-                        <Progress value={(goal.progress / goal.target) * 100} />
-                        <p className="text-xs text-gray-600">
-                          Due: {goal.deadline}
-                        </p>
-                      </div>
-                    ))}
+                  <div className="text-center py-8 text-gray-500">
+                    <Heart className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                    <p>Manage all your volunteer opportunities here</p>
+                    <Button
+                      className="mt-4"
+                      onClick={() => router.push("/organization/events/new")}
+                    >
+                      Create New Opportunity
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
-            </div>
-          </TabsContent>
+            </TabsContent>
 
-          <TabsContent value="opportunities">
-            <Card>
-              <CardHeader>
-                <CardTitle>Volunteer Opportunities Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-8 text-gray-500">
-                  <Heart className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                  <p>Manage all your volunteer opportunities here</p>
-                  <Button
-                    className="mt-4"
-                    onClick={() => router.push("/organization/events/new")}
-                  >
-                    Create New Opportunity
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
+            <TabsContent value="volunteers">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Volunteer Management</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-center py-8 text-gray-500">
+                    <Users className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                    <p>View and manage your volunteers</p>
+                    <Button variant="outline" className="mt-4">
+                      View All Volunteers
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-          <TabsContent value="volunteers">
-            <Card>
-              <CardHeader>
-                <CardTitle>Volunteer Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-8 text-gray-500">
-                  <Users className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                  <p>View and manage your volunteers</p>
-                  <Button variant="outline" className="mt-4">
-                    View All Volunteers
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="analytics">
-            <Card>
-              <CardHeader>
-                <CardTitle>Volunteer Analytics & Reports</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-8 text-gray-500">
-                  <BarChart3 className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                  <p>Track volunteer engagement and impact</p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+            <TabsContent value="analytics">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Volunteer Analytics & Reports</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-center py-8 text-gray-500">
+                    <BarChart3 className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                    <p>Track volunteer engagement and impact</p>
+                  </div>
+                </CardContent>
+              </Card>{" "}
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
     </div>
   );
