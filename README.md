@@ -1,6 +1,14 @@
-# Unity
+<h1 align="center">
+Unity
+</h1>
 
-🌍 **Empowering Communities, One Connection at a Time** 🤝
+<p align="center">
+<img src="./public/logo.png" width="90" alt="logo" />
+</p>
+
+<p align="center">
+🌍 <b>Empowering Communities, One Connection at a Time</b> 🤝
+</p>
 
 ## 📋 Overview
 
@@ -17,7 +25,7 @@ Unity is a collaborative platform designed to connect volunteers, organizations,
 ## 📁 Project Structure
 
 - `src/` — Next.js 15 app directory, React components, and all frontend logic
-  - `app/` — Application routes and pages
+  - `app/` — Application routes, pages, server actions
   - `components/` — Reusable React components
   - `lib/` — Utilities and database connection logic
   - `models/` — Mongoose models for MongoDB collections
@@ -25,9 +33,9 @@ Unity is a collaborative platform designed to connect volunteers, organizations,
 
 ## 🛠️ Technologies
 
-- **Frontend:** TypeScript, Next.js 15, React 19, Tailwind CSS, ShadCN/UI, Lucide React
-- **Backend:** Next.js API Routes, Mongoose ODM, Civic Auth
+- **Web App:** TypeScript, Next.js 15, React 19, Tailwind CSS, ShadCN/UI, Lucide React
 - **Database:** MongoDB
+- **Authentication:** Civic Auth
 
 ## 🎯 Local Setup
 
@@ -35,6 +43,7 @@ Unity is a collaborative platform designed to connect volunteers, organizations,
 
 - Node.js (v22 or higher)
 - MongoDB (local or cloud instance)
+- Civic Auth account
 
 ### Installation & Setup
 
@@ -78,7 +87,6 @@ Unity is a collaborative platform designed to connect volunteers, organizations,
 - `Organization` — Organization details and events
 - `Event` — Community event details
 - `Volunteer` — Volunteer profile and skills
-- `Conversation` & `Message` — Messaging between users
 
 ## 🧩 UI & Styling
 
@@ -100,8 +108,16 @@ Unity is a collaborative platform designed to connect volunteers, organizations,
 
 ## 🤝 Contributing
 
-Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📄 License
+1. 🍴 Fork the repository [here](https://github.com/itskdhere/QuickAid/fork)
+2. 🌟 Create your feature branch: `git checkout -b feature/amazing-feature`
+3. 💾 Commit your changes: `git commit -m 'Add some amazing feature'`
+4. 📤 Push to the branch: `git push origin feature/amazing-feature`
+5. 📬 Open a Pull Request
 
-[MIT](LICENSE)
+---
+
+<p align="center">
+Built with 💜 by Turing Devs at Hack4Bengal 4.0
+</p>
