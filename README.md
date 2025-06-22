@@ -33,9 +33,10 @@ Unity is a collaborative platform designed to connect volunteers, organizations,
 
 ## 🛠️ Technologies
 
-- **Web App:** TypeScript, Next.js 15, React 19, Tailwind CSS, ShadCN/UI, Lucide React
-- **Database:** MongoDB
+- **Web App:** TypeScript, Next.js 15, React 19, Tailwind CSS, ShadCN/UI, Lucide React, mongoose
 - **Authentication:** Civic Auth
+- **Database:** MongoDB
+- **Deployment:** Vercel
 
 ## 🎯 Local Setup
 
@@ -50,7 +51,7 @@ Unity is a collaborative platform designed to connect volunteers, organizations,
 1. **Clone the repository:**
 
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/itskdhere/unity
    cd unity
    ```
 
